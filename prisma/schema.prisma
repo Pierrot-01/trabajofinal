@@ -1,0 +1,159 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Rol {
+  admin
+  tecnico
+  docente
+  estudiante
+}
+
+enum EstadoEquipo {
+  operativo
+  mantenimiento
+  inoperativo
+  dado_de_baja
+}
+
+enum TipoTicket {
+  incidencia
+  solicitud
+}
+
+enum CategoriaTicket {
+  hardware
+  software_licencia
+  software_general
+  red
+}
+
+enum EstadoTicket {
+  pendiente
+  en_proceso
+  resuelto
+}
+
+enum TipoSoftware {
+  licenciado
+  gratuito
+}
+
+model Usuario {
+  id                String   @id @default(cuid())
+  nombre            String
+  correo            String   @unique
+  passwordHash      String
+  rol               Rol
+  activo            Boolean  @default(true)
+  intentosFallidos  Int      @default(0)
+  bloqueadoHasta    DateTime?
+  createdAt         DateTime @default(now())
+
+  ticketsReportados Ticket[] @relation("TicketsReportados")
+  ticketsAsignados  Ticket[] @relation("TicketsAsignados")
+  comentarios       Comentario[]
+  resetTokens       PasswordResetToken[]
+}
+
+model Laboratorio {
+  id         String   @id @default(cuid())
+  nombre     String
+  ubicacion  String
+  capacidad  Int
+  equipos    Equipo[]
+}
+
+model Equipo {
+  id                String        @id @default(cuid())
+  codigoInventario  String        @unique
+  laboratorioId     String
+  laboratorio       Laboratorio   @relation(fields: [laboratorioId], references: [id])
+  estado            EstadoEquipo  @default(operativo)
+
+  tickets           Ticket[]
+  softwareInstalado EquipoSoftware[]
+}
+
+model Software {
+  id       String        @id @default(cuid())
+  nombre   String        @unique
+  tipo     TipoSoftware
+  version  String?
+
+  equipos  EquipoSoftware[]
+  tickets  Ticket[]
+}
+
+model EquipoSoftware {
+  equipoId    String
+  softwareId  String
+  instaladoEn DateTime @default(now())
+
+  equipo      Equipo   @relation(fields: [equipoId], references: [id])
+  software    Software @relation(fields: [softwareId], references: [id])
+
+  @@id([equipoId, softwareId])
+}
+
+model Ticket {
+  id                  String            @id @default(cuid())
+  tipo                TipoTicket
+  categoria           CategoriaTicket
+  descripcion         String
+  fotoUrl             String?
+  estado              EstadoTicket      @default(pendiente)
+  fechaCreacion       DateTime          @default(now())
+  fechaCierre         DateTime?
+  fechaLimite         DateTime?         // solo Solicitudes
+  comentarioCierre    String?
+  softwareTexto       String?           // texto libre si no está en catálogo
+  softwareId          String?           // si viene del catálogo
+  software            Software?         @relation(fields: [softwareId], references: [id])
+
+  equipoId            String
+  equipo              Equipo            @relation(fields: [equipoId], references: [id])
+
+  usuarioReportaId    String
+  usuarioReporta      Usuario           @relation("TicketsReportados", fields: [usuarioReportaId], references: [id])
+
+  tecnicoAsignadoId   String?
+  tecnicoAsignado     Usuario?          @relation("TicketsAsignados", fields: [tecnicoAsignadoId], references: [id])
+
+  ticketRelacionadoId String?
+  ticketRelacionado   Ticket?           @relation("TicketsRelacionados", fields: [ticketRelacionadoId], references: [id])
+  ticketsHijos        Ticket[]          @relation("TicketsRelacionados")
+
+  comentarios         Comentario[]
+
+  @@index([equipoId, estado])
+  @@index([tecnicoAsignadoId, estado])
+  @@index([fechaCreacion])
+}
+
+model Comentario {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  contenido String
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
+  id         String   @id @default(cuid())
+  usuarioId  String
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+  tokenHash  String   @unique
+  expiraEn   DateTime
+  usado      Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([usuarioId])
+}
