@@ -8,7 +8,7 @@ import { crearTicketSchema, cambiarEstadoSchema, comentarioSchema } from "@/lib/
 import { ok, fail } from "@/lib/api-response";
 import { DomainError } from "@/lib/errors/domain-error";
 import { logger } from "@/lib/logger";
-
+import * as equipoRepository from "@/lib/repositories/equipo.repository";
 type EstadoTicket = "pendiente" | "en_proceso" | "resuelto";
 
 
@@ -22,8 +22,13 @@ export async function crearTicket(rawInput: unknown) {
   const parsed = crearTicketSchema.safeParse(rawInput);
   if (!parsed.success) return fail(parsed.error.issues[0].message);
 
+  // El formulario envía el código de inventario (ej. LAB02-PC15), no el ID interno.
+  const equipo = await equipoRepository.buscarPorCodigo(parsed.data.equipoId);
+  if (!equipo) return fail("El equipo seleccionado no existe.");
+  const inputConEquipoReal = { ...parsed.data, equipoId: equipo.id };
+
   try {
-    const result = await ticketService.crear(parsed.data as any, session.user.id, session.user.rol);
+    const result = await ticketService.crear(inputConEquipoReal as any, session.user.id, session.user.rol);
     revalidatePath("/tickets");
     revalidatePath("/laboratorios");
     return result; // ya viene en formato ApiResponse (ok / ok+warning)

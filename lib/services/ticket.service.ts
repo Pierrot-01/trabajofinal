@@ -77,13 +77,10 @@ export async function crear(
   _rol: string
 ) {
   // Edge case 2: el equipo debe existir
-  // El formulario envía el código de inventario (ej. LAB02-PC15), no el ID interno.
-  const equipo = await equipoRepository.buscarPorCodigo(input.equipoId);
+  const equipo = await equipoRepository.buscarPorId(input.equipoId);
   if (!equipo) {
     throw new DomainError("El equipo seleccionado no existe.");
   }
-  // A partir de aquí usamos el ID real de la base de datos, no el código escrito por el usuario.
-  input.equipoId = equipo.id;
 
   // Edge case: equipo dado de baja no puede recibir tickets
   if (equipo.estado === "dado_de_baja") {
