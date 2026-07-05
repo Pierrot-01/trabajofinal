@@ -1,9 +1,8 @@
-// app/laboratorios/page.tsx — Vista pública de estado de equipos (HU-05)
+// app/laboratorios/page.tsx — Vista pública de estado de equipos (HU-05) - Kinetic Lab Style
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import SignOutButton from "@/app/components/SignOutButton";
+import Sidebar from "@/app/components/Sidebar";
 
 interface SoftwareInstalado {
   software: {
@@ -32,7 +31,7 @@ export default async function LaboratoriosPage() {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  // Art. XIV punto 1: select explícito con campos necesarios para esta vista
+  // Select explícito con campos necesarios para esta vista
   const laboratorios = await prisma.laboratorio.findMany({
     select: {
       id: true,
@@ -58,115 +57,152 @@ export default async function LaboratoriosPage() {
     orderBy: { nombre: "asc" },
   });
 
-  const estadoColor: Record<string, string> = {
-    operativo: "bg-emerald-500",
-    mantenimiento: "bg-yellow-500",
-    inoperativo: "bg-red-500",
+  const estadoBadge: Record<string, string> = {
+    operativo: "kl-badge kl-badge-operative",
+    mantenimiento: "kl-badge kl-badge-maintenance",
+    inoperativo: "kl-badge kl-badge-inoperative",
   };
 
   const estadoLabel: Record<string, string> = {
     operativo: "Operativo",
-    mantenimiento: "En mantenimiento",
+    mantenimiento: "Mantenimiento",
     inoperativo: "Inoperativo",
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <nav className="border-b border-slate-900 bg-slate-950/80 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <Link href="/tickets" className="shrink-0 text-lg font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            EPIS UNSCH
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/tickets" className="text-xs text-slate-400 hover:text-slate-200 transition-colors hidden sm:inline">
-              Tickets
-            </Link>
-            <Link href="/tickets/nuevo" className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500">
-              + Reportar
-            </Link>
-            <SignOutButton />
-          </div>
-        </div>
-      </nav>
+    <div className="flex h-screen overflow-hidden bg-background text-on-surface">
+      {/* Sidebar */}
+      <Sidebar userNombre={session.user.name ?? "Usuario"} userRol={session.user.rol} />
 
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-100">Estado de Laboratorios</h1>
-          <p className="mt-2 text-sm text-slate-500">
-            Consulta el estado actual de los equipos antes de tu clase.
-          </p>
-        </div>
-
-        {/* Leyenda */}
-        <div className="mb-8 flex flex-wrap gap-4 text-xs">
-          {Object.entries(estadoLabel).map(([key, label]) => (
-            <div key={key} className="flex items-center gap-1.5">
-              <span className={`h-2.5 w-2.5 rounded-full ${estadoColor[key]}`} />
-              <span className="text-slate-400">{label}</span>
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto">
+        {/* Header */}
+        <div className="px-8 pt-10 pb-6 border-b border-white/5 bg-slate-950/10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h1 className="font-outfit text-4xl font-semibold text-slate-100">
+                Estado de Laboratorios
+              </h1>
+              <p className="mt-1.5 text-sm text-slate-400">
+                Consulta la disponibilidad y configuración de hardware en tiempo real.
+              </p>
             </div>
-          ))}
-          <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-orange-400 animate-pulse" />
-            <span className="text-slate-400">Con incidencias abiertas</span>
+
+            {/* Leyenda */}
+            <div className="flex flex-wrap gap-2.5 p-1 bg-slate-900/40 rounded-lg border border-white/5 w-fit">
+              {Object.entries(estadoLabel).map(([key, label]) => (
+                <span key={key} className={estadoBadge[key]}>
+                  ● {label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="space-y-8">
+        {/* Content Canvas */}
+        <div className="px-8 py-8 space-y-8">
           {laboratorios.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-slate-800 p-16 text-center text-slate-600">
-              No hay laboratorios registrados todavía.
+            <div className="rounded-xl border border-dashed border-white/10 p-16 text-center text-slate-500">
+              No hay laboratorios registrados en el sistema.
             </div>
           )}
 
           {(laboratorios as any as Laboratorio[]).map((lab) => (
-            <div key={lab.id} className="rounded-2xl border border-slate-800 bg-slate-900/30 p-6 shadow-lg">
-              <div className="flex items-start justify-between mb-4">
+            <div key={lab.id} className="kl-card p-6 bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl">
+              {/* Lab Summary */}
+              <div className="flex items-start justify-between mb-6 pb-4 border-b border-white/5">
                 <div>
-                  <h2 className="text-xl font-bold text-slate-100">{lab.nombre}</h2>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    📍 {lab.ubicacion} · {lab.capacidad} puestos
+                  <h2 className="font-outfit text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[#cfbcff]">meeting_room</span>
+                    {lab.nombre}
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[13px] text-[#cfbcff]">location_on</span>
+                    {lab.ubicacion}
+                    <span className="text-slate-600">•</span>
+                    <span className="material-symbols-outlined text-[13px] text-[#cfbcff]">devices</span>
+                    {lab.capacidad} puestos
                   </p>
                 </div>
-                <span className="text-xs text-slate-500 bg-slate-800 px-2.5 py-1 rounded-full">
-                  {lab.equipos.length} equipos
+                <span className="font-mono text-xs text-[#cfbcff] bg-[#cfbcff]/10 px-2.5 py-0.5 rounded border border-[#cfbcff]/20">
+                  {lab.equipos.length} Equipos Activos
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {/* Workstations Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {lab.equipos.map((eq: Equipo) => {
                   const tieneTicketAbierto = eq.tickets.length > 0;
+
+                  // Colores e íconos dinámicos del equipo
+                  const statusColors: Record<string, { dot: string; bg: string; text: string; border: string }> = {
+                    operativo: { dot: "#4edea3", bg: "rgba(78, 222, 163, 0.04)", text: "#4edea3", border: "rgba(78, 222, 163, 0.15)" },
+                    mantenimiento: { dot: "#e7c365", bg: "rgba(231, 195, 101, 0.04)", text: "#e7c365", border: "rgba(231, 195, 101, 0.15)" },
+                    inoperativo: { dot: "#ff7070", bg: "rgba(255, 112, 112, 0.04)", text: "#ff7070", border: "rgba(255, 112, 112, 0.15)" },
+                  };
+
+                  const activeStyle = statusColors[eq.estado] ?? statusColors.operativo;
+
                   return (
                     <div
                       key={eq.id}
-                      className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 hover:border-slate-700 transition-all"
+                      className={`rounded-xl p-4 transition-all duration-300 border ${tieneTicketAbierto ? "shadow-[0_0_15px_rgba(231,195,101,0.1)]" : ""
+                        }`}
+                      style={{
+                        background: activeStyle.bg,
+                        borderColor: tieneTicketAbierto ? "rgba(231,195,101,0.4)" : activeStyle.border,
+                      }}
                       title={`${eq.codigoInventario} — ${estadoLabel[eq.estado]}`}
                     >
-                      {/* Indicador de estado */}
-                      <div className="flex items-center gap-2 mb-2">
-                        <span
-                          className={`h-2 w-2 rounded-full flex-shrink-0 ${estadoColor[eq.estado]} ${tieneTicketAbierto ? "animate-pulse" : ""}`}
-                        />
-                        <span className="font-mono text-xs font-semibold text-slate-300 truncate">
-                          {eq.codigoInventario}
+                      {/* Header row */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`h-2.5 w-2.5 rounded-full shrink-0`}
+                            style={{
+                              backgroundColor: activeStyle.dot,
+                              animation: tieneTicketAbierto ? "pulse 2s infinite" : "none",
+                            }}
+                          />
+                          <span className="font-mono text-xs font-semibold text-slate-200 truncate">
+                            {eq.codigoInventario}
+                          </span>
+                        </div>
+                        <span className={estadoBadge[eq.estado]}>
+                          {estadoLabel[eq.estado]}
                         </span>
                       </div>
-                      <div className="text-xs text-slate-600 capitalize">{estadoLabel[eq.estado]}</div>
+
+                      {/* Alert banner if ticket open */}
                       {tieneTicketAbierto && (
-                        <div className="mt-1.5 text-xs text-orange-400 font-semibold">
-                          ⚠️ Incidencia abierta
+                        <div className="mb-3 px-2 py-1 rounded bg-yellow-500/10 border border-yellow-500/20 text-[10px] font-bold text-yellow-400 font-mono flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[12px] animate-pulse">warning</span>
+                          INCIDENCIA ACTIVA
                         </div>
                       )}
-                      {/* Software instalado */}
-                      {eq.softwareInstalado.length > 0 && (
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          {eq.softwareInstalado.slice(0, 3).map((es: SoftwareInstalado) => (
-                            <span key={es.software.nombre} className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-500" style={{ fontSize: "10px" }}>
-                              {es.software.nombre}
-                            </span>
-                          ))}
-                          {eq.softwareInstalado.length > 3 && (
-                            <span className="text-slate-600" style={{ fontSize: "10px" }}>+{eq.softwareInstalado.length - 3}</span>
-                          )}
+
+                      {/* Software installed */}
+                      {eq.softwareInstalado.length > 0 ? (
+                        <div className="pt-2 border-t border-white/5">
+                          <p className="font-mono text-[9px] font-bold tracking-widest text-slate-500 mb-1.5 uppercase">SOFTWARE</p>
+                          <div className="flex flex-wrap gap-1">
+                            {eq.softwareInstalado.slice(0, 3).map((es: SoftwareInstalado) => (
+                              <span key={es.software.nombre}
+                                className="rounded px-1.5 py-0.5 font-geist"
+                                style={{ fontSize: "9px", background: "var(--surface-high)", color: "var(--muted-foreground)" }}>
+                                {es.software.nombre}
+                              </span>
+                            ))}
+                            {eq.softwareInstalado.length > 3 && (
+                              <span className="text-[9px] text-slate-500 font-mono self-center px-1">
+                                +{eq.softwareInstalado.length - 3}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="pt-2 border-t border-white/5">
+                          <span className="text-[9px] text-slate-600 font-mono italic">Sin software instalado</span>
                         </div>
                       )}
                     </div>
@@ -176,7 +212,12 @@ export default async function LaboratoriosPage() {
             </div>
           ))}
         </div>
-      </div>
-    </main>
+      </main>
+
+      {/* Pulse keyframe for animations */}
+      <style>{`
+        @keyframes pulse { 0%,100% { opacity:1; transform: scale(1); } 50% { opacity:.4; transform: scale(1.1); } }
+      `}</style>
+    </div>
   );
 }

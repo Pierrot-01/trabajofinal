@@ -1,11 +1,10 @@
-// app/tickets/page.tsx — Panel de gestión de tickets (HU-03, HU-04)
+// app/tickets/page.tsx — Panel de gestión de tickets (HU-03, HU-04) — Kinetic Lab Design
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import * as ticketRepository from "@/lib/repositories/ticket.repository";
 import * as ticketService from "@/lib/services/ticket.service";
 import TicketsPanelClient from "@/app/tickets/TicketsPanelClient";
-import Link from "next/link";
-import SignOutButton from "@/app/components/SignOutButton";
+import Sidebar from "@/app/components/Sidebar";
 
 interface PageProps {
   searchParams: Promise<{ cursor?: string; laboratorioId?: string; estado?: string }>;
@@ -32,38 +31,32 @@ export default async function TicketsPage({ searchParams }: PageProps) {
   }));
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <nav className="border-b border-slate-900 bg-slate-950/80 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <Link href="/tickets" className="shrink-0 text-lg font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            EPIS UNSCH
-          </Link>
-          <div className="hidden sm:flex gap-3 text-xs text-slate-400">
-            <Link href="/laboratorios" className="hover:text-slate-200 transition-colors">Laboratorios</Link>
-            {session.user.rol === "admin" && (
-              <>
-                <Link href="/admin/equipos" className="hover:text-slate-200 transition-colors">Equipos</Link>
-                <Link href="/admin/usuarios" className="hover:text-slate-200 transition-colors">Usuarios</Link>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="hidden md:inline text-xs text-slate-500 font-semibold bg-slate-900 px-2.5 py-1 rounded-full border border-slate-800">
-              {session.user.name} ({session.user.rol})
-            </span>
-            <SignOutButton />
-          </div>
-        </div>
-      </nav>
+    <div className="flex h-screen overflow-hidden" style={{ background: "var(--background)" }}>
+      {/* Sidebar */}
+      <Sidebar userNombre={session.user.name ?? "Usuario"} userRol={session.user.rol} />
 
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <TicketsPanelClient
-          tickets={enriched}
-          nextCursor={nextCursor}
-          rol={session.user.rol}
-          currentUserId={session.user.id}
-        />
-      </div>
-    </main>
+      {/* Main content */}
+      <main className="flex-1 overflow-y-auto">
+        {/* Page header */}
+        <div className="px-8 pt-10 pb-6">
+          <h1 className="font-outfit text-4xl font-semibold" style={{ color: "var(--foreground)" }}>
+            Tickets
+          </h1>
+          <p className="mt-1 text-sm" style={{ color: "var(--muted-foreground)" }}>
+            Gestiona y resuelve alertas activas del sistema.
+          </p>
+        </div>
+
+        {/* Content */}
+        <div className="px-8 pb-10">
+          <TicketsPanelClient
+            tickets={enriched}
+            nextCursor={nextCursor}
+            rol={session.user.rol}
+            currentUserId={session.user.id}
+          />
+        </div>
+      </main>
+    </div>
   );
 }

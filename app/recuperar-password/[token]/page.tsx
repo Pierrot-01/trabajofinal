@@ -1,4 +1,4 @@
-// app/recuperar-password/[token]/page.tsx — Restablecer contraseña con token (HU-05)
+// app/recuperar-password/[token]/page.tsx — Restablecer contraseña con token (HU-05) - Kinetic Lab Style
 "use client";
 
 import React, { useState } from "react";
@@ -52,36 +52,42 @@ export default function RestablecerPasswordPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-radial from-slate-900 via-slate-950 to-black px-4 py-12 text-white">
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-slate-800/80 bg-slate-900/40 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-slate-700/50">
-        
-        {/* Encabezado */}
-        <div className="text-center">
-          <h1 className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent">
-            Nueva Contraseña
-          </h1>
-          <p className="mt-2 text-sm text-slate-400 font-medium">
-            Establece tu nueva contraseña de acceso. Mínimo 8 caracteres.
-          </p>
-        </div>
+    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12 relative" style={{ background: "var(--background)" }}>
+      {/* Grid background effect */}
+      <div className="pointer-events-none fixed inset-0" style={{
+        backgroundImage: "linear-gradient(rgba(103,80,164,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(103,80,164,0.03) 1px,transparent 1px)",
+        backgroundSize: "40px 40px",
+      }} />
 
-        {/* Formulario */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
-              <span className="font-semibold">Error:</span> {error}
-            </div>
-          )}
+      <div className="relative z-10 w-full max-w-md space-y-6">
+        <div className="kl-card p-8 bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <h1 className="font-outfit text-2xl font-bold text-slate-100 flex items-center justify-center gap-2">
+              <span className="material-symbols-outlined text-[#cfbcff] text-2xl">password</span>
+              Nueva Contraseña
+            </h1>
+            <p className="mt-2 text-xs text-slate-400">
+              Establece tus nuevas credenciales de acceso institucional. Mínimo 8 caracteres.
+            </p>
+          </div>
 
-          {mensaje && (
-            <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-400 font-medium">
-              {mensaje}
-            </div>
-          )}
+          {/* Form */}
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {error && (
+              <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-400">
+                ⚠️ {error}
+              </div>
+            )}
 
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="passwordNueva" className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+            {mensaje && (
+              <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-xs text-emerald-400">
+                ✓ {mensaje}
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <label htmlFor="passwordNueva" className="kl-label">
                 Nueva Contraseña
               </label>
               <input
@@ -93,12 +99,12 @@ export default function RestablecerPasswordPage() {
                 value={passwordNueva}
                 onChange={(e) => setPasswordNueva(e.target.value)}
                 disabled={isLoading || !!mensaje}
-                className="mt-1 block w-full rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 shadow-inner outline-none transition-all focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 disabled:opacity-50"
+                className="kl-input"
               />
             </div>
 
-            <div>
-              <label htmlFor="confirmPassword" className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <div className="space-y-1">
+              <label htmlFor="confirmPassword" className="kl-label">
                 Confirmar Contraseña
               </label>
               <input
@@ -106,35 +112,33 @@ export default function RestablecerPasswordPage() {
                 name="confirmPassword"
                 type="password"
                 required
-                placeholder="Repite la contraseña"
+                placeholder="Repite la nueva contraseña"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 disabled={isLoading || !!mensaje}
-                className="mt-1 block w-full rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 shadow-inner outline-none transition-all focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 disabled:opacity-50"
+                className="kl-input"
               />
             </div>
-          </div>
 
-          <div className="space-y-4">
             <button
               type="submit"
               disabled={isLoading || !!mensaje}
-              className="relative flex w-full justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:from-blue-500 hover:to-indigo-500 active:scale-98 disabled:opacity-50"
+              className="kl-btn-primary w-full justify-center py-2.5 mt-2"
             >
-              {isLoading ? "Restableciendo..." : "Guardar Contraseña"}
+              {isLoading ? "Guardando..." : "Guardar Nueva Contraseña"}
             </button>
 
-            <div className="text-center">
+            <div className="text-center pt-2">
               <Link
                 href="/login"
-                className="text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-xs text-slate-400 hover:text-slate-200 transition-colors inline-flex items-center gap-1"
               >
+                <span className="material-symbols-outlined" style={{ fontSize: 13 }}>arrow_back</span>
                 Ir al inicio de sesión
               </Link>
             </div>
-          </div>
-        </form>
-
+          </form>
+        </div>
       </div>
     </main>
   );

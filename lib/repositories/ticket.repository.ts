@@ -25,7 +25,20 @@ export async function buscarPorId(id: string) {
   return prisma.ticket.findUnique({
     where: { id },
     include: {
-      equipo: { select: { id: true, estado: true, laboratorioId: true } },
+      equipo: {
+        select: {
+          id: true,
+          codigoInventario: true,
+          estado: true,
+          laboratorioId: true,
+          laboratorio: {
+            select: {
+              nombre: true,
+              ubicacion: true,
+            },
+          },
+        },
+      },
       usuarioReporta: { select: { id: true, nombre: true, rol: true } },
       tecnicoAsignado: { select: { id: true, nombre: true, rol: true } },
       comentarios: { include: { usuario: { select: { id: true, nombre: true, rol: true } } }, orderBy: { createdAt: "asc" } },

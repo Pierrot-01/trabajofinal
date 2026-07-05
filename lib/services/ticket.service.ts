@@ -81,7 +81,6 @@ export async function crear(
   if (!equipo) {
     throw new DomainError("El equipo seleccionado no existe.");
   }
-
   // Edge case: equipo dado de baja no puede recibir tickets
   if (equipo.estado === "dado_de_baja") {
     throw new DomainError("Este equipo ha sido dado de baja y no puede recibir nuevos tickets.");

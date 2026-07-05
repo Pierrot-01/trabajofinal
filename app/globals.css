@@ -1,3 +1,5 @@
+/* ── Kinetic Lab Systems — Design Tokens ─────────────────────────────── */
+/* Fuentes cargadas via next/font/google en layout.tsx (Outfit + Inter)   */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -7,9 +9,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-outfit);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -18,11 +20,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -39,92 +36,305 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
+/* ── Kinetic Lab Dark Theme (único modo del sistema) ─────────────────── */
+:root,
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Surfaces — deep navy-black */
+  --background:          #031427;
+  --surface-dim:         #031427;
+  --surface-bright:      #2a3a4f;
+  --surface-low:         #0b1c30;
+  --surface-container:   #102034;
+  --surface-high:        #1b2b3f;
+  --surface-highest:     #26364a;
+
+  /* On-surface */
+  --foreground:          #d3e4fe;
+  --muted-foreground:    #8fa9c8;
+
+  /* Primary — industrial purple */
+  --primary:             #6750a4;
+  --primary-light:       #cfbcff;
+  --primary-foreground:  #ffffff;
+
+  /* Semantic states */
+  --state-operative:     #4edea3;   /* emerald — operativo / bajo */
+  --state-maintenance:   #e7c365;   /* amber  — mantenimiento / medio */
+  --state-inoperative:   #ff7070;   /* coral  — inoperativo / alto */
+  --state-retired:       #6b7a8d;   /* slate  — dado de baja */
+
+  /* Cards & containers */
+  --card:                #102034;
+  --card-foreground:     #d3e4fe;
+  --popover:             #0b1c30;
+  --popover-foreground:  #d3e4fe;
+
+  /* Borders */
+  --border:              rgba(255,255,255,0.10);
+  --border-hover:        rgba(255,255,255,0.25);
+  --input:               rgba(255,255,255,0.08);
+  --ring:                #6750a4;
+
+  /* Secondary, muted, accent */
+  --secondary:           #1b2b3f;
+  --secondary-foreground:#d3e4fe;
+  --muted:               #102034;
+  --accent:              rgba(103,80,164,0.15);
+  --accent-foreground:   #cfbcff;
+  --destructive:         #ff7070;
+
+  /* Sidebar */
+  --sidebar:             #000f21;
+  --sidebar-foreground:  #d3e4fe;
+  --sidebar-primary:     #6750a4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent:      rgba(103,80,164,0.20);
+  --sidebar-accent-foreground:  #cfbcff;
+  --sidebar-border:      rgba(255,255,255,0.08);
+  --sidebar-ring:        #6750a4;
+
+  --radius: 0.25rem;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
-    @apply font-sans;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+}
+
+/* ── Kinetic Lab Utilities ───────────────────────────────────────────── */
+@layer utilities {
+  /* Glass card */
+  .kl-card {
+    background: var(--surface-container);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    backdrop-filter: blur(12px);
+    transition: border-color 150ms ease;
+  }
+  .kl-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  /* Sidebar item */
+  .kl-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition: background 150ms, color 150ms;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .kl-nav-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--foreground);
+  }
+  .kl-nav-item.active {
+    background: rgba(103,80,164,0.20);
+    color: var(--primary-light);
+  }
+
+  /* Pill badges */
+  .kl-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-family: 'Geist', 'Geist Mono', monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .kl-badge-high {
+    background: rgba(255,112,112,0.15);
+    color: #ff7070;
+    border: 1px solid rgba(255,112,112,0.30);
+  }
+  .kl-badge-medium {
+    background: rgba(231,195,101,0.15);
+    color: #e7c365;
+    border: 1px solid rgba(231,195,101,0.30);
+  }
+  .kl-badge-low {
+    background: rgba(78,222,163,0.15);
+    color: #4edea3;
+    border: 1px solid rgba(78,222,163,0.30);
+  }
+  .kl-badge-operative {
+    background: rgba(78,222,163,0.15);
+    color: #4edea3;
+    border: 1px solid rgba(78,222,163,0.30);
+  }
+  .kl-badge-maintenance {
+    background: rgba(231,195,101,0.15);
+    color: #e7c365;
+    border: 1px solid rgba(231,195,101,0.30);
+  }
+  .kl-badge-inoperative {
+    background: rgba(255,112,112,0.15);
+    color: #ff7070;
+    border: 1px solid rgba(255,112,112,0.30);
+  }
+  .kl-badge-retired {
+    background: rgba(107,122,141,0.15);
+    color: #8fa9c8;
+    border: 1px solid rgba(107,122,141,0.30);
+  }
+  .kl-badge-admin {
+    background: rgba(103,80,164,0.20);
+    color: #cfbcff;
+    border: 1px solid rgba(103,80,164,0.40);
+  }
+  .kl-badge-tecnico {
+    background: rgba(78,222,163,0.15);
+    color: #4edea3;
+    border: 1px solid rgba(78,222,163,0.30);
+  }
+  .kl-badge-docente {
+    background: rgba(231,195,101,0.15);
+    color: #e7c365;
+    border: 1px solid rgba(231,195,101,0.30);
+  }
+  .kl-badge-estudiante {
+    background: rgba(107,122,141,0.15);
+    color: #8fa9c8;
+    border: 1px solid rgba(107,122,141,0.30);
+  }
+
+  /* Primary button */
+  .kl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: background 150ms, transform 100ms;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  .kl-btn-primary:hover { background: #7c65bc; }
+  .kl-btn-primary:active { transform: scale(0.98); }
+  .kl-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Ghost button */
+  .kl-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    transition: border-color 150ms, color 150ms;
+    cursor: pointer;
+    outline: none;
+  }
+  .kl-btn-ghost:hover {
+    border-color: var(--border-hover);
+    color: var(--foreground);
+  }
+  .kl-btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Danger ghost button */
+  .kl-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: #ff7070;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border: 1px solid rgba(255,112,112,0.30);
+    transition: background 150ms;
+    cursor: pointer;
+    outline: none;
+  }
+  .kl-btn-danger:hover { background: rgba(255,112,112,0.10); }
+  .kl-btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* KL Input */
+  .kl-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface-low);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    color: var(--foreground);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 150ms;
+  }
+  .kl-input::placeholder { color: var(--muted-foreground); opacity: 0.7; }
+  .kl-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(103,80,164,0.15); }
+
+  /* KL Label */
+  .kl-label {
+    font-family: 'Geist', monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /* Data grid row */
+  .kl-row {
+    display: grid;
+    align-items: center;
+    padding: 0 1rem;
+    height: 2.5rem; /* 40px */
+    border-bottom: 1px solid var(--border);
+    transition: background 100ms;
+    font-size: 0.8125rem;
+  }
+  .kl-row:nth-child(even) {
+    background: rgba(255,255,255,0.012);
+  }
+  .kl-row:hover {
+    background: rgba(103,80,164,0.08);
+  }
+
+  /* Outfit font for headings */
+  .font-outfit { font-family: 'Outfit', system-ui, sans-serif; }
+  .font-geist  { font-family: 'Geist', 'Geist Mono', monospace; }
 }
