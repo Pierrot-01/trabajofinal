@@ -248,3 +248,22 @@ export async function bloquearUsuario(usuarioId: string, bloqueadoHasta: Date) {
     data: { bloqueadoHasta },
   });
 }
+
+import { IUsuarioRepository } from "../ports/IUsuarioRepository";
+export const usuarioRepository: IUsuarioRepository = {
+  buscarPorCorreo,
+  buscarPorId,
+  buscarPasswordHashPorId,
+  listarTokensActivos,
+  crear,
+  actualizar,
+  listarPaginado,
+  contarAdminsActivos,
+  crearResetToken,
+  buscarTokenActivo,
+  marcarTokenUsado,
+  registrarIntentoFallido,
+  resetearIntentos,
+  bloquearUsuario,
+};
+

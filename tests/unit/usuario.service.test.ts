@@ -22,6 +22,8 @@ vi.mock("@/lib/repositories/usuario.repository", () => ({
   marcarTokenUsado: vi.fn(),
 }));
 
+
+
 describe("Módulo de Usuarios y Autenticación — Pruebas Unitarias", () => {
   beforeEach(() => {
     vi.clearAllMocks();

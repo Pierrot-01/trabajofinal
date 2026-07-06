@@ -2,12 +2,12 @@
 // Art. III: Lógica de negocio aislada.
 // Art. IV: Defensa contra rate limiting, hasheo y validaciones.
 
-import * as usuarioRepository from "@/lib/repositories/usuario.repository";
+import { IUsuarioRepository, Rol } from "../ports/IUsuarioRepository";
+import * as defaultRepo from "../repositories/usuario.repository";
 import { DomainError } from "@/lib/errors/domain-error";
 import { logger } from "@/lib/logger";
 import { crearUsuarioSchema } from "@/lib/validators/usuario.validators";
 
-type Rol = "admin" | "tecnico" | "docente" | "estudiante";
 
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
@@ -16,8 +16,12 @@ import crypto from "crypto";
  * Valida las credenciales de inicio de sesión de un usuario.
  * Aplica rate limiting (bloqueo de 15 minutos tras 5 intentos fallidos consecutivos).
  */
-export async function validarLogin(correo: string, passwordPlain: string) {
-  const usuario = await usuarioRepository.buscarPorCorreo(correo);
+export async function validarLogin(
+  correo: string,
+  passwordPlain: string,
+  repo: IUsuarioRepository = defaultRepo
+) {
+  const usuario = await repo.buscarPorCorreo(correo);
   if (!usuario) {
     logger.warn("validarLogin", "Intento de inicio de sesión con correo inexistente", { correo });
     return null; // Evita enumeración de usuarios (Art. IV)
@@ -50,7 +54,7 @@ export async function validarLogin(correo: string, passwordPlain: string) {
 
   if (!esValida) {
     // Incrementar intentos fallidos
-    const nuevosIntentos = usuario.intentosFallidos + 1;
+    const nuevosIntentos = (usuario.intentosFallidos ?? 0) + 1;
     logger.warn("validarLogin", "Contraseña incorrecta", {
       correo,
       intento: nuevosIntentos,
@@ -59,21 +63,21 @@ export async function validarLogin(correo: string, passwordPlain: string) {
     if (nuevosIntentos >= 5) {
       // Bloquear cuenta por 15 minutos
       const bloqueadoHasta = new Date(ahora.getTime() + 15 * 60000);
-      await usuarioRepository.bloquearUsuario(usuario.id, bloqueadoHasta);
-      await usuarioRepository.registrarIntentoFallido(usuario.id, nuevosIntentos);
+      await repo.bloquearUsuario(usuario.id, bloqueadoHasta);
+      await repo.registrarIntentoFallido(usuario.id, nuevosIntentos);
       logger.error("validarLogin", "Cuenta bloqueada por exceso de intentos fallidos", {
         correo,
         bloqueadoHasta,
       });
     } else {
-      await usuarioRepository.registrarIntentoFallido(usuario.id, nuevosIntentos);
+      await repo.registrarIntentoFallido(usuario.id, nuevosIntentos);
     }
 
     return null; // Mensaje genérico para el cliente
   }
 
   // 4. Login exitoso — resetear intentos fallidos
-  await usuarioRepository.resetearIntentos(usuario.id);
+  await repo.resetearIntentos(usuario.id);
   logger.info("validarLogin", "Inicio de sesión exitoso", { correo, rol: usuario.rol });
 
   return {
@@ -84,30 +88,32 @@ export async function validarLogin(correo: string, passwordPlain: string) {
   };
 }
 
-
 /**
  * Crea un nuevo usuario en el sistema.
  */
-export async function crear(data: {
-  nombre: string;
-  correo: string;
-  rol: Rol;
-  password: string;
-}) {
+export async function crear(
+  data: {
+    nombre: string;
+    correo: string;
+    rol: Rol;
+    password: string;
+  },
+  repo: IUsuarioRepository = defaultRepo
+) {
   // Validar con Zod (defensa en profundidad)
   const validacion = crearUsuarioSchema.safeParse(data);
   if (!validacion.success) {
     throw new DomainError(validacion.error.issues[0].message);
   }
 
-  const existente = await usuarioRepository.buscarPorCorreo(data.correo);
+  const existente = await repo.buscarPorCorreo(data.correo);
   if (existente) {
     throw new DomainError("Este correo ya está registrado.");
   }
 
   const passwordHash = await bcrypt.hash(data.password, 10);
 
-  const usuario = await usuarioRepository.crear({
+  const usuario = await repo.crear({
     nombre: data.nombre,
     correo: data.correo,
     passwordHash,
@@ -127,20 +133,20 @@ export async function crear(data: {
  * Cambia el rol de un usuario existente.
  * Valida la regla de que no se puede dejar el sistema sin administradores activos.
  */
-export async function cambiarRol(usuarioId: string, nuevoRol: Rol) {
-  const usuario = await usuarioRepository.buscarPorId(usuarioId);
+export async function cambiarRol(usuarioId: string, nuevoRol: Rol, repo: IUsuarioRepository = defaultRepo) {
+  const usuario = await repo.buscarPorId(usuarioId);
   if (!usuario) {
     throw new DomainError("El usuario no existe.");
   }
 
   if (usuario.rol === "admin" && nuevoRol !== "admin") {
-    const adminsActivos = await usuarioRepository.contarAdminsActivos();
+    const adminsActivos = await repo.contarAdminsActivos();
     if (adminsActivos <= 1) {
       throw new DomainError("Debe existir al menos un administrador activo.");
     }
   }
 
-  const actualizado = await usuarioRepository.actualizar(usuarioId, { rol: nuevoRol });
+  const actualizado = await repo.actualizar(usuarioId, { rol: nuevoRol });
   logger.info("cambiarRol", "Rol de usuario actualizado", {
     usuarioId,
     anteriorRol: usuario.rol,
@@ -154,20 +160,20 @@ export async function cambiarRol(usuarioId: string, nuevoRol: Rol) {
  * Desactiva la cuenta de un usuario (activo: false).
  * Valida la regla de que no se puede desactivar al único administrador activo.
  */
-export async function desactivar(usuarioId: string) {
-  const usuario = await usuarioRepository.buscarPorId(usuarioId);
+export async function desactivar(usuarioId: string, repo: IUsuarioRepository = defaultRepo) {
+  const usuario = await repo.buscarPorId(usuarioId);
   if (!usuario) {
     throw new DomainError("El usuario no existe.");
   }
 
   if (usuario.rol === "admin") {
-    const adminsActivos = await usuarioRepository.contarAdminsActivos();
+    const adminsActivos = await repo.contarAdminsActivos();
     if (adminsActivos <= 1) {
       throw new DomainError("Debe existir al menos un administrador activo.");
     }
   }
 
-  const desactivado = await usuarioRepository.actualizar(usuarioId, { activo: false });
+  const desactivado = await repo.actualizar(usuarioId, { activo: false });
   logger.info("desactivarUsuario", "Usuario desactivado", { usuarioId });
 
   return desactivado;
@@ -179,10 +185,11 @@ export async function desactivar(usuarioId: string) {
 export async function cambiarPassword(
   usuarioId: string,
   passwordActual: string,
-  passwordNueva: string
+  passwordNueva: string,
+  repo: IUsuarioRepository = defaultRepo
 ) {
   // Buscar usuario para obtener su hash actual
-  const usuario = await usuarioRepository.buscarPasswordHashPorId(usuarioId);
+  const usuario = await repo.buscarPasswordHashPorId(usuarioId);
 
   if (!usuario) {
     throw new DomainError("El usuario no existe.");
@@ -198,7 +205,7 @@ export async function cambiarPassword(
   const nuevoHash = await bcrypt.hash(passwordNueva, 10);
 
   // Actualizar
-  await usuarioRepository.actualizar(usuarioId, { passwordHash: nuevoHash });
+  await repo.actualizar(usuarioId, { passwordHash: nuevoHash });
   logger.info("cambiarPassword", "Contraseña cambiada exitosamente", { usuarioId });
 
   return { success: true };
@@ -208,9 +215,9 @@ export async function cambiarPassword(
  * Solicita la recuperación de contraseña enviando un enlace simulado por consola.
  * Retorna siempre éxito genérico por seguridad (evitar enumeración, HU-05 Criterio 1).
  */
-export async function solicitarRecuperacion(correo: string) {
+export async function solicitarRecuperacion(correo: string, repo: IUsuarioRepository = defaultRepo) {
   try {
-    const usuario = await usuarioRepository.buscarPorCorreo(correo);
+    const usuario = await repo.buscarPorCorreo(correo);
     if (!usuario) {
       // Retornar éxito ficticio para seguridad contra enumeración
       logger.info("solicitarRecuperacion", "Intento de recuperación para correo inexistente", { correo });
@@ -224,7 +231,7 @@ export async function solicitarRecuperacion(correo: string) {
     const tokenHash = await bcrypt.hash(tokenPlano, 10);
     const expiraEn = new Date(Date.now() + 60 * 60000); // 1 hora de vigencia
 
-    await usuarioRepository.crearResetToken(usuario.id, tokenHash, expiraEn);
+    await repo.crearResetToken(usuario.id, tokenHash, expiraEn);
 
     // Simulación de envío por correo (Mock Service)
     const urlRecuperacion = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/recuperar-password/${tokenPlano}`;
@@ -253,11 +260,11 @@ export async function solicitarRecuperacion(correo: string) {
 /**
  * Restablece la contraseña de un usuario mediante su token de recuperación.
  */
-export async function resetearPassword(tokenPlano: string, passwordNueva: string) {
+export async function resetearPassword(tokenPlano: string, passwordNueva: string, repo: IUsuarioRepository = defaultRepo) {
   // Dado que el tokenHash está en bcrypt en la BD, no podemos indexarlo.
   // Por tanto, listamos los tokens activos generales (no usados y no expirados),
   // que en la base de datos de desarrollo/producción en la última hora serán muy pocos (usualmente < 10).
-  const tokensActivos = await usuarioRepository.listarTokensActivos();
+  const tokensActivos = await repo.listarTokensActivos();
 
   let tokenEncontrado = null;
 
@@ -278,8 +285,8 @@ export async function resetearPassword(tokenPlano: string, passwordNueva: string
   const nuevoHash = await bcrypt.hash(passwordNueva, 10);
 
   // Ejecutar cambios
-  await usuarioRepository.actualizar(tokenEncontrado.usuarioId, { passwordHash: nuevoHash });
-  await usuarioRepository.marcarTokenUsado(tokenEncontrado.id);
+  await repo.actualizar(tokenEncontrado.usuarioId, { passwordHash: nuevoHash });
+  await repo.marcarTokenUsado(tokenEncontrado.id);
 
   logger.info("resetearPassword", "Contraseña restablecida exitosamente", {
     usuarioId: tokenEncontrado.usuarioId,

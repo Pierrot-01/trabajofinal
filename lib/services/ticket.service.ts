@@ -1,16 +1,11 @@
 // lib/services/ticket.service.ts — Lógica de negocio completa de Tickets
-import * as ticketRepository from "@/lib/repositories/ticket.repository";
-import * as equipoRepository from "@/lib/repositories/equipo.repository";
-import { prisma } from "@/lib/prisma";
+import { ITicketRepository, EstadoTicket, CrearTicketData, TicketBase, TipoTicket, CategoriaTicket } from "../ports/ITicketRepository";
+import { IEquipoRepository } from "../ports/IEquipoRepository";
+import * as defaultTicketRepo from "../repositories/ticket.repository";
+import * as defaultEquipoRepo from "../repositories/equipo.repository";
 import { DomainError } from "@/lib/errors/domain-error";
+
 import { ok } from "@/lib/api-response";
-
-type EstadoTicket = "pendiente" | "en_proceso" | "resuelto";
-type TipoTicket = "incidencia" | "solicitud";
-type CategoriaTicket = "hardware" | "software_licencia" | "software_general" | "red";
-
-
-
 
 // ---------------------------------------------------------------------------
 // Tipos locales
@@ -74,10 +69,12 @@ export function estaAtrasado(
 export async function crear(
   input: CrearTicketInput,
   usuarioId: string,
-  _rol: string
+  _rol: string,
+  ticketRepo: ITicketRepository = defaultTicketRepo,
+  equipoRepo: IEquipoRepository = defaultEquipoRepo
 ) {
   // Edge case 2: el equipo debe existir
-  const equipo = await equipoRepository.buscarPorId(input.equipoId);
+  const equipo = await equipoRepo.buscarPorId(input.equipoId);
   if (!equipo) {
     throw new DomainError("El equipo seleccionado no existe.");
   }
@@ -88,7 +85,7 @@ export async function crear(
 
   // Validar ticket relacionado (Edge case 3, T057b–T057c)
   if (input.ticketRelacionadoId) {
-    const ticketPrevio = await ticketRepository.buscarPorId(input.ticketRelacionadoId);
+    const ticketPrevio = await ticketRepo.buscarPorId(input.ticketRelacionadoId);
     if (!ticketPrevio) {
       throw new DomainError("El ticket relacionado no existe.");
     }
@@ -100,7 +97,7 @@ export async function crear(
     }
   }
 
-  const ticket = await ticketRepository.crear({
+  const ticket = await ticketRepo.crear({
     ...input,
     usuarioReportaId: usuarioId,
   });
@@ -108,7 +105,7 @@ export async function crear(
   // HU-01 Criterio 7: advertir si ya hay un ticket abierto de Incidencia en el mismo equipo
   let warning: string | undefined;
   if (input.tipo === "incidencia") {
-    const abiertos = await ticketRepository.buscarPorEquipoYEstado(input.equipoId, [
+    const abiertos = await ticketRepo.buscarPorEquipoYEstado(input.equipoId, [
       "pendiente",
       "en_proceso",
     ]);
@@ -126,17 +123,18 @@ export async function crear(
 export async function asignar(
   ticketId: string,
   tecnicoId: string,
-  rolEjecutor: string
+  rolEjecutor: string,
+  ticketRepo: ITicketRepository = defaultTicketRepo
 ) {
   if (rolEjecutor !== "tecnico" && rolEjecutor !== "admin") {
     throw new DomainError("No tienes permisos para asignar tickets.");
   }
-  const ticket = await ticketRepository.buscarPorId(ticketId);
+  const ticket = await ticketRepo.buscarPorId(ticketId);
   if (!ticket) throw new DomainError("El ticket no existe.");
   if (ticket.tecnicoAsignadoId) {
     throw new DomainError("Este ticket ya fue asignado a un técnico.");
   }
-  return ticketRepository.asignarTecnico(ticketId, tecnicoId);
+  return ticketRepo.asignarTecnico(ticketId, tecnicoId);
 }
 
 // ---------------------------------------------------------------------------
@@ -145,14 +143,15 @@ export async function asignar(
 export async function reasignar(
   ticketId: string,
   tecnicoId: string,
-  rolEjecutor: string
+  rolEjecutor: string,
+  ticketRepo: ITicketRepository = defaultTicketRepo
 ) {
   if (rolEjecutor !== "admin") {
     throw new DomainError("Solo un administrador puede reasignar un ticket ya asignado.");
   }
-  const ticket = await ticketRepository.buscarPorId(ticketId);
+  const ticket = await ticketRepo.buscarPorId(ticketId);
   if (!ticket) throw new DomainError("El ticket no existe.");
-  return ticketRepository.asignarTecnico(ticketId, tecnicoId);
+  return ticketRepo.asignarTecnico(ticketId, tecnicoId);
 }
 
 // ---------------------------------------------------------------------------
@@ -163,14 +162,16 @@ export async function cambiarEstado(
   nuevoEstado: EstadoTicket,
   comentarioCierre: string | undefined,
   usuarioId: string,
-  rol: string
+  rol: string,
+  ticketRepo: ITicketRepository = defaultTicketRepo,
+  equipoRepo: IEquipoRepository = defaultEquipoRepo
 ) {
   // Edge case 5: solo técnico o admin
   if (rol !== "tecnico" && rol !== "admin") {
     throw new DomainError("No tienes permisos para cambiar el estado de este ticket.");
   }
 
-  const ticket = await ticketRepository.buscarPorId(ticketId);
+  const ticket = await ticketRepo.buscarPorId(ticketId);
   if (!ticket) throw new DomainError("El ticket no existe.");
 
   const estado = ticket.estado;
@@ -193,38 +194,39 @@ export async function cambiarEstado(
         "Debes ingresar un comentario de cierre (mínimo 5 caracteres) al resolver el ticket."
       );
     }
-    const resultado = await ticketRepository.actualizarEstado(ticketId, nuevoEstado, {
+    const resultado = await ticketRepo.actualizarEstado(ticketId, nuevoEstado, {
       fechaCierre: new Date(),
       comentarioCierre: comentarioCierre.trim(),
     });
     // Efectos automáticos al resolver (Clarify #1 y #7)
-    await resolverEfectos(ticket);
+    await resolverEfectos(ticket, ticketRepo, equipoRepo);
     return resultado;
   }
 
-  return ticketRepository.actualizarEstado(ticketId, nuevoEstado);
+  return ticketRepo.actualizarEstado(ticketId, nuevoEstado);
 }
 
 // ---------------------------------------------------------------------------
 // Efectos automáticos al resolver (T042–T046)
 // ---------------------------------------------------------------------------
-type TicketResuelto = NonNullable<Awaited<ReturnType<typeof ticketRepository.buscarPorId>>>;
-
-async function resolverEfectos(ticket: TicketResuelto) {
+async function resolverEfectos(
+  ticket: TicketBase,
+  ticketRepo: ITicketRepository,
+  equipoRepo: IEquipoRepository
+) {
   const equipoId = ticket.equipo.id;
   const tipo = ticket.tipo;
   const categoria = ticket.categoria;
-  const softwareId = (ticket as { softwareId?: string | null }).softwareId;
+  const softwareId = ticket.softwareId;
 
   if (tipo === "incidencia" && categoria === "hardware") {
     // Clarify #1: actualizar estado del equipo
-    const ticketsAbiertos = await ticketRepository.contarPorEquipoYEstados(equipoId, [
+    const ticketsAbiertos = await ticketRepo.contarPorEquipoYEstados(equipoId, [
       "pendiente",
       "en_proceso",
     ]);
-    const nuevoEstado: "mantenimiento" | "operativo" =
-      ticketsAbiertos > 0 ? "mantenimiento" : "operativo";
-    await equipoRepository.actualizarEstado(equipoId, nuevoEstado);
+    const nuevoEstado = ticketsAbiertos > 0 ? "mantenimiento" : "operativo";
+    await equipoRepo.actualizarEstado(equipoId, nuevoEstado);
   }
 
   if (
@@ -233,16 +235,8 @@ async function resolverEfectos(ticket: TicketResuelto) {
     softwareId
   ) {
     // Clarify #7: upsert en EquipoSoftware
-    await upsertEquipoSoftware(equipoId, softwareId);
+    await equipoRepo.upsertEquipoSoftware(equipoId, softwareId);
   }
-}
-
-async function upsertEquipoSoftware(equipoId: string, softwareId: string) {
-  await prisma.equipoSoftware.upsert({
-    where: { equipoId_softwareId: { equipoId, softwareId } },
-    create: { equipoId, softwareId },
-    update: { instaladoEn: new Date() },
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -250,14 +244,15 @@ async function upsertEquipoSoftware(equipoId: string, softwareId: string) {
 // ---------------------------------------------------------------------------
 export async function agregarComentario(
   input: { ticketId: string; contenido: string },
-  usuarioId: string
+  usuarioId: string,
+  ticketRepo: ITicketRepository = defaultTicketRepo
 ) {
-  const ticket = await ticketRepository.buscarPorId(input.ticketId);
+  const ticket = await ticketRepo.buscarPorId(input.ticketId);
   if (!ticket) throw new DomainError("El ticket no existe.");
   if (ticket.estado === "resuelto") {
     throw new DomainError("No se pueden agregar comentarios a un ticket ya resuelto.");
   }
-  return ticketRepository.crearComentario({
+  return ticketRepo.crearComentario({
     ticketId: input.ticketId,
     usuarioId,
     contenido: input.contenido,
@@ -267,10 +262,14 @@ export async function agregarComentario(
 // ---------------------------------------------------------------------------
 // HU-06: Reportes (T051–T052)
 // ---------------------------------------------------------------------------
-export async function tiempoPromedioResolucion() {
-  return ticketRepository.tiempoPromedioResolucion();
+export async function tiempoPromedioResolucion(ticketRepo: ITicketRepository = defaultTicketRepo) {
+  return ticketRepo.tiempoPromedioResolucion();
 }
 
-export async function equiposConMasTickets(n: number, meses: number) {
-  return ticketRepository.equiposConMasTickets(n, meses);
+export async function equiposConMasTickets(
+  n: number,
+  meses: number,
+  ticketRepo: ITicketRepository = defaultTicketRepo
+) {
+  return ticketRepo.equiposConMasTickets(n, meses);
 }

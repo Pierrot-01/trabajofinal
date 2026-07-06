@@ -55,8 +55,10 @@ export default function UserManagementClient({ usuariosIniciales, nextCursor, cu
   const [isLoading, setIsLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [filtro, setFiltro] = useState("");
+  const [estadoFiltro, setEstadoFiltro] = useState<"todos" | "activos" | "inactivos">("todos");
 
   const router = useRouter();
+
 
   const handleCrearUsuario = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,10 +101,14 @@ export default function UserManagementClient({ usuariosIniciales, nextCursor, cu
     } catch { setError("Error al desactivar el usuario."); }
   };
 
-  const usuariosFiltrados = usuariosIniciales.filter(u =>
-    u.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    u.correo.toLowerCase().includes(filtro.toLowerCase())
-  );
+  const usuariosFiltrados = usuariosIniciales.filter(u => {
+    const matchesSearch = u.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+                          u.correo.toLowerCase().includes(filtro.toLowerCase());
+    const matchesEstado = estadoFiltro === "todos" ? true :
+                          estadoFiltro === "activos" ? u.activo : !u.activo;
+    return matchesSearch && matchesEstado;
+  });
+
 
   return (
     <div className="space-y-6">
@@ -182,22 +188,36 @@ export default function UserManagementClient({ usuariosIniciales, nextCursor, cu
 
       {/* Main Data Container */}
       <div className="kl-card overflow-hidden bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl">
-        {/* Search */}
+        {/* Search & Filter */}
         <div className="p-4 border-b border-white/5 bg-slate-950/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="relative w-full sm:w-72">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
-            <input
-              type="text"
-              placeholder="Search by name or email..."
-              value={filtro}
-              onChange={(e) => setFiltro(e.target.value)}
-              className="kl-input pl-9"
-            />
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:w-72">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+              <input
+                type="text"
+                placeholder="Search by name or email..."
+                value={filtro}
+                onChange={(e) => setFiltro(e.target.value)}
+                className="kl-input pl-9"
+              />
+            </div>
+
+            <select
+              value={estadoFiltro}
+              onChange={(e) => setEstadoFiltro(e.target.value as any)}
+              className="kl-input py-2 text-xs cursor-pointer w-full sm:w-40"
+            >
+              <option value="todos">Todos los Estados</option>
+              <option value="activos">Solo Activos</option>
+              <option value="inactivos">Solo Inactivos</option>
+            </select>
           </div>
-          <span className="font-mono text-xs text-[#cfbcff] bg-[#cfbcff]/10 px-2.5 py-0.5 rounded border border-[#cfbcff]/20">
-            {usuariosFiltrados.length} Personnel Active
+
+          <span className="font-mono text-xs text-[#cfbcff] bg-[#cfbcff]/10 px-2.5 py-0.5 rounded border border-[#cfbcff]/20 whitespace-nowrap">
+            {usuariosFiltrados.length} Registros
           </span>
         </div>
+
 
         {/* Data Table */}
         <div className="overflow-x-auto">

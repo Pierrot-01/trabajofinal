@@ -157,3 +157,17 @@ export async function equiposConMasTickets(n: number, meses: number) {
   });
   return agrupados;
 }
+
+import { ITicketRepository } from "../ports/ITicketRepository";
+export const ticketRepository: ITicketRepository = {
+  crear,
+  buscarPorId,
+  buscarPorEquipoYEstado,
+  actualizarEstado,
+  asignarTecnico,
+  contarPorEquipoYEstados,
+  crearComentario,
+  tiempoPromedioResolucion,
+  equiposConMasTickets,
+};
+

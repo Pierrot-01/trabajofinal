@@ -65,3 +65,26 @@ export async function buscarEquiposPorLaboratorio(laboratorioId: string) {
     select: { id: true, codigoInventario: true, estado: true },
   });
 }
+
+export async function upsertEquipoSoftware(equipoId: string, softwareId: string) {
+  return prisma.equipoSoftware.upsert({
+    where: { equipoId_softwareId: { equipoId, softwareId } },
+    create: { equipoId, softwareId },
+    update: { instaladoEn: new Date() },
+  });
+}
+
+import { IEquipoRepository } from "../ports/IEquipoRepository";
+export const equipoRepository: IEquipoRepository = {
+  buscarPorId,
+  buscarPorCodigo,
+  actualizarEstado,
+  crear,
+  editar,
+  contarTicketsAbiertos,
+  listarPaginado,
+  buscarEquiposPorLaboratorio,
+  upsertEquipoSoftware,
+};
+
+

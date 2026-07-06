@@ -35,3 +35,15 @@ export async function contarRelaciones(softwareId: string): Promise<number> {
   ]);
   return enEquipos + enTickets;
 }
+
+import { ISoftwareRepository } from "../ports/ISoftwareRepository";
+export const softwareRepository: ISoftwareRepository = {
+  crear,
+  buscarPorId,
+  buscarPorNombre,
+  listar,
+  actualizar,
+  eliminar,
+  contarRelaciones,
+};
+

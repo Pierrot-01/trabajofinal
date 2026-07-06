@@ -1,7 +1,7 @@
 // app/components/Sidebar.tsx — Navegación lateral Kinetic Lab
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SignOutButton from "@/app/components/SignOutButton";
@@ -74,6 +74,7 @@ const rolLabel: Record<string, string> = {
 
 export default function Sidebar({ userNombre, userRol }: SidebarProps) {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
@@ -81,6 +82,7 @@ export default function Sidebar({ userNombre, userRol }: SidebarProps) {
   const navItem = (href: string, icon: React.ReactNode, label: string) => (
     <Link
       href={href}
+      onClick={() => setIsOpen(false)}
       className={`kl-nav-item ${isActive(href) ? "active" : ""}`}
     >
       {icon}
@@ -97,78 +99,106 @@ export default function Sidebar({ userNombre, userRol }: SidebarProps) {
     .toUpperCase();
 
   return (
-    <aside
-      className="flex h-screen w-60 shrink-0 flex-col border-r"
-      style={{
-        background: "var(--sidebar)",
-        borderColor: "var(--sidebar-border)",
-      }}
-    >
-      {/* Logo */}
-      <div className="flex items-center gap-3 px-4 py-5 border-b" style={{ borderColor: "var(--sidebar-border)" }}>
-        <div
-          className="flex h-9 w-9 items-center justify-center rounded-lg"
-          style={{ background: "var(--primary)", flexShrink: 0 }}
-        >
-          {/* Ícono de laboratorio */}
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} className="w-5 h-5">
-            <path d="M9 3v11.5a3.5 3.5 0 007 0V3" />
-            <path d="M6.5 3h11" />
-          </svg>
-        </div>
-        <div>
-          <p className="font-outfit text-sm font-700 leading-tight" style={{ color: "var(--foreground)", fontWeight: 700 }}>
-            EPIS Lab
-          </p>
-          <p className="font-geist text-[10px] leading-tight" style={{ color: "var(--muted-foreground)" }}>
-            Precision Systems
-          </p>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-0.5">
-        {navItem("/tickets", Icons.tickets, "Tickets")}
-        {navItem("/laboratorios", Icons.labs, "Labs")}
-
-        {(userRol === "admin" || userRol === "tecnico") && (
-          navItem("/admin/equipos", Icons.inventory, "Inventario")
-        )}
-
-        {userRol === "admin" && (
-          <>
-            {navItem("/admin/laboratorios", Icons.labs, "Laboratorios")}
-            {navItem("/admin/software", Icons.software, "Software")}
-            {navItem("/admin/usuarios", Icons.users, "Usuarios")}
-          </>
-        )}
-
-        <div className="pt-2 mt-2 border-t" style={{ borderColor: "var(--sidebar-border)" }}>
-          {navItem("/cuenta", Icons.settings, "Mi cuenta")}
-        </div>
-      </nav>
-
-      {/* User footer */}
-      <div
-        className="flex items-center gap-3 px-4 py-4 border-t"
-        style={{ borderColor: "var(--sidebar-border)" }}
+    <>
+      {/* Floating Toggle Button for Mobile */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed top-4 right-4 z-40 flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-900 border border-white/10 text-white shadow-lg md:hidden hover:bg-zinc-800 transition-colors"
+        aria-label="Toggle Menu"
       >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+          {isOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {/* Backdrop for Mobile */}
+      {isOpen && (
         <div
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold"
-          style={{ background: "var(--primary)", color: "#fff" }}
+          className="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar aside */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-30 flex h-screen w-60 shrink-0 flex-col border-r transition-transform duration-300 md:static md:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+        style={{
+          background: "var(--sidebar)",
+          borderColor: "var(--sidebar-border)",
+        }}
+      >
+        {/* Logo */}
+        <div className="flex items-center gap-3 px-4 py-5 border-b" style={{ borderColor: "var(--sidebar-border)" }}>
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-lg"
+            style={{ background: "var(--primary)", flexShrink: 0 }}
+          >
+            {/* Ícono de laboratorio */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} className="w-5 h-5">
+              <path d="M9 3v11.5a3.5 3.5 0 007 0V3" />
+              <path d="M6.5 3h11" />
+            </svg>
+          </div>
+          <div>
+            <p className="font-outfit text-sm font-700 leading-tight" style={{ color: "var(--foreground)", fontWeight: 700 }}>
+              EPIS Lab
+            </p>
+            <p className="font-geist text-[10px] leading-tight" style={{ color: "var(--muted-foreground)" }}>
+              Precision Systems
+            </p>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-0.5">
+          {navItem("/tickets", Icons.tickets, "Tickets")}
+          {navItem("/laboratorios", Icons.labs, "Labs")}
+
+          {(userRol === "admin" || userRol === "tecnico") && (
+            navItem("/admin/equipos", Icons.inventory, "Inventario")
+          )}
+
+          {userRol === "admin" && (
+            <>
+              {navItem("/admin/laboratorios", Icons.labs, "Laboratorios")}
+              {navItem("/admin/software", Icons.software, "Software")}
+              {navItem("/admin/usuarios", Icons.users, "Usuarios")}
+            </>
+          )}
+
+          <div className="pt-2 mt-2 border-t" style={{ borderColor: "var(--sidebar-border)" }}>
+            {navItem("/cuenta", Icons.settings, "Mi cuenta")}
+          </div>
+        </nav>
+
+        {/* User footer */}
+        <div
+          className="flex items-center gap-3 px-4 py-4 border-t"
+          style={{ borderColor: "var(--sidebar-border)" }}
         >
-          {initials}
+          <div
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold"
+            style={{ background: "var(--primary)", color: "#fff" }}
+          >
+            {initials}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="truncate text-xs font-semibold" style={{ color: "var(--foreground)" }}>
+              {userNombre}
+            </p>
+            <p className="font-geist text-[10px]" style={{ color: "var(--muted-foreground)" }}>
+              {rolLabel[userRol] ?? userRol}
+            </p>
+          </div>
+          <SignOutButton compact />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="truncate text-xs font-semibold" style={{ color: "var(--foreground)" }}>
-            {userNombre}
-          </p>
-          <p className="font-geist text-[10px]" style={{ color: "var(--muted-foreground)" }}>
-            {rolLabel[userRol] ?? userRol}
-          </p>
-        </div>
-        <SignOutButton compact />
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

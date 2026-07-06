@@ -31,3 +31,13 @@ export async function listarConEquipos() {
 export async function contarEquipos(laboratorioId: string): Promise<number> {
   return prisma.equipo.count({ where: { laboratorioId } });
 }
+
+import { ILaboratorioRepository } from "../ports/ILaboratorioRepository";
+export const laboratorioRepository: ILaboratorioRepository = {
+  crear,
+  buscarPorId,
+  listar,
+  listarConEquipos,
+  contarEquipos,
+};
+
