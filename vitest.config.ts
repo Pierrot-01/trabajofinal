@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     globals: true,
-    setupFiles: ['./vitest.setup.ts'],
+    setupFiles: ['./tests/vitest.setup.ts'],
     env: {
       DATABASE_URL: "mysql://db_user:db_password_123@localhost:3306/dummy_test_db",
       AUTH_SECRET: "dummy_secret_for_auth_testing_purpose_32chars"
