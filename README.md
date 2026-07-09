@@ -24,23 +24,20 @@ El desarrollo del sistema no se rigió por metodologías empíricas, sino por el
 [Constitution] ➔ [Specify] ➔ [Clarify] ➔ [Plan] ➔ [Tasks] ➔ [Analyze] ➔ [Implement]
 ```
 
-### Automatización del Proceso:
-*   **Motor de Agente Inteligente (`.agents/rules`):** Las reglas fundamentales (Constitución, Especificaciones y Planes Técnicos) residen en el repositorio bajo `.agents/rules/`. El agente de desarrollo lee automáticamente estas especificaciones abiertas antes de escribir código, forzando la consistencia lógica y rechazando de forma automática cualquier propuesta que viole la arquitectura limpia o las políticas de seguridad (defensa ante inyecciones o Broken Access Control).
-*   **Compilador de Modelos (Prisma Engine):** Traduce automáticamente el esquema relacional (`schema.prisma`) a tipos y consultas de TypeScript seguras contra errores de tipo.
-*   **Validador Sintáctico (Zod Engine):** Realiza análisis y validaciones sintácticas automáticas en la frontera de las peticiones HTTP de la API, bloqueando peticiones malformadas.
-
 ---
 
-## 📖 Especificación Abierta de API (Open Spec) y Swagger UI
+## 🤖 Herramientas de Automatización (Open Spec & Spec Kit)
 
-El proyecto implementa la especificación abierta **OpenAPI 3.0** para documentar y simular de forma dinámica el comportamiento de sus servicios:
+El proyecto integra de forma explícita herramientas automatizadas basadas en especificaciones, divididas en dos categorías gobernadas por la ingeniería de calidad:
 
-*   **Especificación JSON:** Servida automáticamente por el sistema en la ruta `/api/openapi`.
-*   **Swagger UI (Panel Interactivo):** Disponible localmente en `/docs`. Permite a cualquier evaluador o docente simular las transacciones lógicas del sistema, incluyendo:
-    *   Autenticación de usuarios institucionales (`@unsch.edu.pe`).
-    *   Reportes de incidencias y solicitudes de software.
-    *   Ciclo de vida del ticket (Pendiente ➔ En Proceso ➔ Resuelto) con transiciones automáticas en el estado del hardware.
-    *   Administración segura del catálogo lógico de software.
+### 1. Especificación Abierta (Open Spec)
+*   **Estándar OpenAPI 3.0 (`openapi.json`):** Definición formal de los contratos de entrada/salida y endpoints del sistema, expuesta automáticamente en la ruta `/api/openapi`.
+*   **Swagger UI (`/docs`):** Interfaz interactiva y automatizada que renderiza la especificación de API. Permite al evaluador o docente simular transacciones lógicas del sistema (como creación de tickets, autenticación y transiciones de estado) directamente desde el navegador.
+
+### 2. Kit de Generación y Validación (Spec Kit)
+*   **Prisma Client Generator:** Actúa como el *Spec Kit* de base de datos. Lee la especificación relacional (`schema.prisma`) y genera automáticamente las clases, tipos de TypeScript y consultas del cliente SQL, garantizando consistencia absoluta y mitigando errores de tipado.
+*   **Zod Schema Validator:** Funciona como el *Spec Kit* de validación sintáctica del lado del servidor. Genera y automatiza el análisis y validación de las cargas útiles (payloads) de entrada en tiempo de ejecución, rechazando datos malformados en frontera.
+*   **Antigravity (Agentic Coding Engine):** El IDE de desarrollo inteligente actúa como el compilador del *Spec Kit* metodológico. Lee de forma automática las especificaciones abiertas ubicadas en `.agents/rules/` (Constitución, especificaciones e Historias de Usuario) para auditar, planificar e implementar la arquitectura del código, impidiendo la inyección silenciosa de deuda técnica o violaciones de seguridad.
 
 ---
 
