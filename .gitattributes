@@ -1,0 +1,5 @@
+# .gitattributes
+# Indicar a GitHub (Linguist) que trate estas carpetas como soporte/librerías para mantener limpio el cálculo de lenguajes
+tests/**/* linguist-vendored=true
+.agents/**/* linguist-vendored=true
+scripts/**/* linguist-vendored=true
