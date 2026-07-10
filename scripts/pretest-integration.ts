@@ -30,9 +30,9 @@ if (fs.existsSync(envTestPath)) {
 console.log(`🔌 DATABASE_URL configurada para pruebas: ${process.env.DATABASE_URL}`);
 
 try {
-  console.log("🔄 Reseteando base de datos de pruebas e iniciando seed...");
-  // prisma db push/migrate reset
-  execSync("pnpm prisma migrate reset --force", { stdio: "inherit" });
+  console.log("🔄 Sincronizando base de datos de pruebas e iniciando seed...");
+  execSync("pnpm prisma db push --accept-data-loss", { stdio: "inherit" });
+  execSync("pnpm prisma db seed", { stdio: "inherit" });
   console.log("✅ Base de datos de pruebas inicializada y poblada.");
 } catch (error) {
   console.error("❌ Error inicializando base de datos de pruebas:", error);
