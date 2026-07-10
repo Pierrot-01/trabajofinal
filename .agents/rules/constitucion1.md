@@ -38,11 +38,11 @@ No se introduce tecnología fuera de esta lista sin justificar el cambio explíc
 |---|---|
 | Frontend | Next.js (App Router) + TypeScript + Tailwind CSS + shadcn/ui |
 | Backend | Next.js API Routes / Server Actions (mismo repo, sin servicio separado) |
-| Base de datos | MySQL |
+| Base de datos | PostgreSQL (Supabase) |
 | ORM | Prisma |
 | Gestor de paquetes | **pnpm** (no npm — estructura estricta de `node_modules`, mitiga phantom dependencies) |
 | Autenticación | **Auth.js** (decisión cerrada en `plan.md` Sección 5.5 — Analyze v1.4: la Constitution decía "JWT o Auth.js", dejando una opción abierta que el plan ya resolvió) |
-| Contenedores | Docker (obligatorio para MySQL; opcional para la app en desarrollo) |
+| Contenedores | Docker (opcional para Postgres local/pruebas) |
 | Despliegue | Vercel |
  
 **No negociable:** un solo lenguaje (TypeScript) en todo el proyecto. No se mezcla PHP, JS vanilla suelto, ni un backend separado en otro framework.
@@ -160,7 +160,6 @@ Toda API Route o Server Action, sin excepción, devuelve el mismo contrato:
  
 1. Se distinguen dos tipos de error en la capa `services`:
    - **Error de dominio** (ej. reportar un equipo que ya está en mantenimiento, asignar un ticket ya cerrado) → se captura explícitamente, con un tipo/clase propio (ej. `DomainError`), y se traduce a un mensaje claro en `error` del contrato del Artículo IX.
-   - **Error no controlado** (fallo de Prisma, de red, de MySQL) → se captura, se registra en un log del servidor (nunca solo `console.log`; usar un logger mínimo estructurado), y hacia el cliente se devuelve un mensaje genérico ("Ocurrió un error, intenta nuevamente"), **nunca** el detalle interno del ORM o de la base de datos.
-2. **No negociable:** prohibido exponer stack traces, códigos de error de Prisma/MySQL, o rutas de archivo del servidor en cualquier respuesta hacia el cliente.
+   - **Error no controlado** (fallo de Prisma, de red, de PostgreSQL) → se captura, se registra en un log del servidor (nunca solo `console.log`; usar un logger mínimo estructurado), y hacia el cliente se devuelve un mensaje genérico ("Ocurrió un error, intenta nuevamente"), **nunca** el detalle interno del ORM o de la base de datos.
+2. **No negociable:** prohibido exponer stack traces, códigos de error de Prisma/PostgreSQL, o rutas de archivo del servidor en cualquier respuesta hacia el cliente.
 ---
- 

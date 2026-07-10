@@ -39,7 +39,7 @@ Si el agente de IA detecta ambigüedad en el modelo de datos, en una dependencia
 3. **Imágenes:** toda imagen (fotos de incidencias, íconos de categoría) se sirve con `next/image`, nunca `<img>` plano — compresión y lazy loading automáticos.
 4. **Revalidación (ISR) para lecturas de baja volatilidad:** vistas que cambian con poca frecuencia y son de lectura pública (ej. catálogo de laboratorios sin filtrar) usan `revalidate` con un tiempo fijo razonable (ej. 60 segundos) en vez de forzar recarga total en cada visita; vistas que dependen de una mutación específica (ej. `/laboratorios` tras resolver un ticket) usan `revalidatePath` bajo demanda (Art. XI), no ISR por tiempo.
 5. **Índices de base de datos:** todo campo usado como filtro frecuente en un reporte o listado (ej. `fechaCreacion` para reportes históricos) debe tener un índice declarado en `schema.prisma` — no se agregan índices "después, si hace falta".
-6. **Conexión de Prisma en entorno serverless (Vercel):** se usa un patrón de instancia única de `PrismaClient` (singleton) para evitar agotar el pool de conexiones de MySQL en cada invocación serverless — patrón estándar documentado en la guía oficial de Prisma para Next.js.
+6. **Conexión de Prisma en entorno serverless (Vercel):** se usa un patrón de instancia única de `PrismaClient` (singleton) para evitar agotar el pool de conexiones de PostgreSQL en cada invocación serverless — patrón estándar documentado en la guía oficial de Prisma para Next.js.
 ---
  
 ## Registro de cambios
@@ -54,3 +54,4 @@ Si el agente de IA detecta ambigüedad en el modelo de datos, en una dependencia
 | 1.5 | Julio 2026 | Se incorpora el Artículo XIV (Optimización y rendimiento): consultas Prisma explícitas, paginación obligatoria, `next/image`, ISR para lecturas de baja volatilidad, índices de BD para reportes, y singleton de `PrismaClient` en entorno serverless. La arquitectura de optimización se había discutido antes en la conversación pero nunca se formalizó en ningún artefacto de SDD. |
 | 1.6 | Julio 2026 | Se agrega `Usuario.activo` y la entidad `PasswordResetToken` al Artículo VII, requeridos por `specs/002-usuarios/spec.md`. |
 | 1.7 | Julio 2026 | Se agrega el valor `dado_de_baja` al enum de estado de `Equipo` (Artículo VII), requerido por `specs/003-laboratorios-equipos/spec.md`. |
+| 1.8 | Julio 2026 | **Migración de Infraestructura:** Se migra el proveedor de base de datos a PostgreSQL (Supabase) y el entorno de despliegue a Vercel. Se redirige la salida del cliente de Prisma a una ruta interna (`lib/prisma-client`) para evitar incompatibilidades de los enlaces simbólicos de pnpm bajo la directiva de seguridad `ignore-scripts=true`. |
