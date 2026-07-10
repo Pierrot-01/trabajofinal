@@ -49,3 +49,5 @@ next-env.d.ts
 prisma/dev.db
 prisma/test.db
 
+# prisma custom output client
+/lib/prisma-client
