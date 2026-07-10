@@ -148,7 +148,7 @@ export default function TicketsPanelClient({ tickets, nextCursor, rol, currentUs
 
       {/* Data grid header */}
       <div
-        className="border border-b-0 px-4"
+        className="hidden md:block border border-b-0 px-4"
         style={{ background: "var(--surface-low)", borderColor: "var(--border)" }}
       >
         <div
@@ -179,10 +179,58 @@ export default function TicketsPanelClient({ tickets, nextCursor, rol, currentUs
         )}
 
         {visibleTickets.map((t) => (
-          <div key={t.id}>
-            {/* Main row */}
+          <div key={t.id} className="border-b last:border-b-0 border-[var(--border)]">
+            {/* Mobile View Card */}
+            <div className="flex flex-col gap-3 p-4 md:hidden bg-[var(--surface-container)]">
+              <div className="flex items-center justify-between">
+                <Link
+                  href={`/tickets/${t.id}`}
+                  className="font-geist text-xs font-semibold hover:underline hover:text-[#cfbcff] transition-colors"
+                  style={{ color: "var(--primary-light)" }}
+                >
+                  TKT-{t.id.slice(-4).toUpperCase()}
+                </Link>
+                <div className="flex items-center gap-1.5">
+                  <PrioridadBadge p={t.prioridad} />
+                  <EstadoBadge e={t.estado} atrasado={t.atrasado} />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <span className="block text-xs font-semibold text-[var(--foreground)]">
+                  {t.equipo.codigoInventario}
+                </span>
+                <p className="text-[11px] text-[var(--muted-foreground)] line-clamp-2 leading-relaxed">
+                  {t.descripcion}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 text-[10px] text-[var(--muted-foreground)] border-t border-white/5">
+                <span className="font-medium bg-white/5 px-2 py-0.5 rounded text-[10px]">
+                  {categoriaLabel[t.categoria] ?? t.categoria}
+                </span>
+                <span>
+                  {new Date(t.fechaCreacion).toLocaleDateString("es-PE", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[11px] italic" style={{ color: t.tecnicoAsignadoId ? "var(--foreground)" : "var(--muted-foreground)" }}>
+                  {t.tecnicoAsignadoId ? "Asignado" : "Unassigned"}
+                </span>
+                <Link
+                  href={`/tickets/${t.id}`}
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#cfbcff] hover:underline"
+                >
+                  <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 600" }}>visibility</span>
+                  Ver detalle
+                </Link>
+              </div>
+            </div>
+
+            {/* Desktop View Row */}
             <div
-              className="kl-row"
+              className="hidden md:grid kl-row border-b-0"
               style={{
                 gridTemplateColumns: "110px 1fr 130px 90px 90px 110px 110px 120px",
                 gap: "1rem",
