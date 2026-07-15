@@ -8,7 +8,7 @@ import { crearEquipoSchema, editarEquipoSchema } from "@/lib/validators/equipo.v
 import { ok, fail } from "@/lib/api-response";
 import { DomainError } from "@/lib/errors/domain-error";
 import { logger } from "@/lib/logger";
-import type { EstadoEquipo } from "@prisma/client";
+import type { EstadoEquipo } from "@/lib/prisma-client";
 
 export async function crearEquipo(rawInput: unknown) {
   const session = await auth();

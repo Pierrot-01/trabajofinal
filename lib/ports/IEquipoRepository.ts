@@ -1,5 +1,5 @@
 // lib/ports/IEquipoRepository.ts — Puerto (interfaz) del repositorio de Equipos
-import type { EstadoEquipo } from "@prisma/client";
+import type { EstadoEquipo } from "@/lib/prisma-client";
 
 export interface EquipoBase {
   id: string;

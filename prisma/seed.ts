@@ -5,7 +5,7 @@
 // Contraseñas hasheadas con bcrypt — nunca texto plano, ni en datos de prueba.
 // Contraseña de todos los usuarios de prueba: "Password123"
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../lib/prisma-client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();

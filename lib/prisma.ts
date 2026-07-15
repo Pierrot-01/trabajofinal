@@ -3,7 +3,7 @@
 // y durante hot-reload en desarrollo.
 // Todo repository importa de aquí; ninguno instancia new PrismaClient() por su cuenta.
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/lib/prisma-client";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 

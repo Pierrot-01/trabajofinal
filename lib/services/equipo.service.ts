@@ -6,7 +6,7 @@ import * as defaultLabRepo from "../repositories/laboratorio.repository";
 import { DomainError } from "@/lib/errors/domain-error";
 
 import { ok } from "@/lib/api-response";
-import type { EstadoEquipo } from "@prisma/client";
+import type { EstadoEquipo } from "@/lib/prisma-client";
 
 // ---------------------------------------------------------------------------
 // HU-02: Crear equipo dentro de un laboratorio

@@ -1,6 +1,6 @@
 // lib/repositories/equipo.repository.ts — Repositorio de Equipos (extendido desde 001-tickets)
 import { prisma } from "@/lib/prisma";
-import type { EstadoEquipo } from "@prisma/client";
+import type { EstadoEquipo } from "@/lib/prisma-client";
 
 export async function buscarPorId(id: string) {
   return prisma.equipo.findUnique({
