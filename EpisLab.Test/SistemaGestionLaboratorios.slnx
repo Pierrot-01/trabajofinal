@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ClassLibrary1/SistemaGestionLaboratorios.csproj" />
+  <Project Path="TestProject1/SistemaGestionLaboratorios.Tests.csproj" />
+</Solution>

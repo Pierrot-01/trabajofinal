@@ -11,6 +11,16 @@ export default defineConfig({
     env: {
       DATABASE_URL: "mysql://db_user:db_password_123@localhost:3306/dummy_test_db",
       AUTH_SECRET: "dummy_secret_for_auth_testing_purpose_32chars"
+    },
+    coverage: {
+      provider: 'v8',
+      exclude: [
+        'lib/prisma-client/**',
+        'lib/prisma.ts',
+        'lib/logger.ts',
+        'lib/auth.ts',
+        'tests/**'
+      ]
     }
   },
 });

@@ -1,0 +1,1746 @@
+{
+  "SistemaGestionLaboratorios.dll": {
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Services\\ApiResponse.cs": {
+      "SistemaGestionLaboratorios.Services.ApiResponse`1": {
+        "System.Boolean SistemaGestionLaboratorios.Services.ApiResponse`1::get_Success()": {
+          "Lines": {
+            "8": 32
+          },
+          "Branches": []
+        },
+        "T SistemaGestionLaboratorios.Services.ApiResponse`1::get_Data()": {
+          "Lines": {
+            "9": 19
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Services.ApiResponse`1::get_Error()": {
+          "Lines": {
+            "10": 4
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Services.ApiResponse`1::get_Warning()": {
+          "Lines": {
+            "11": 22
+          },
+          "Branches": []
+        },
+        "System.Boolean SistemaGestionLaboratorios.Services.ApiResponse`1::get_HasWarning()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SistemaGestionLaboratorios.Services.ApiResponse`1::get_HasData()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.ApiResponseHelper": {
+        "SistemaGestionLaboratorios.Services.ApiResponse`1<T> SistemaGestionLaboratorios.Services.ApiResponseHelper::Ok(T,System.String)": {
+          "Lines": {
+            "20": 14,
+            "21": 14,
+            "22": 14,
+            "23": 14,
+            "24": 14,
+            "25": 14,
+            "26": 14,
+            "27": 14
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Services.ApiResponse`1<T> SistemaGestionLaboratorios.Services.ApiResponseHelper::Fail(System.String)": {
+          "Lines": {
+            "31": 2,
+            "32": 2,
+            "33": 2,
+            "34": 2,
+            "35": 2,
+            "36": 2,
+            "37": 2
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Services.ApiResponse`1<System.Object> SistemaGestionLaboratorios.Services.ApiResponseHelper::Fail(System.String)": {
+          "Lines": {
+            "40": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Services\\EquipoService.cs": {
+      "SistemaGestionLaboratorios.Services.EquipoService": {
+        "System.Void SistemaGestionLaboratorios.Services.EquipoService::.ctor(SistemaGestionLaboratorios.Services.IEquipoRepository,SistemaGestionLaboratorios.Services.ILaboratorioRepository)": {
+          "Lines": {
+            "27": 33,
+            "28": 33,
+            "29": 33,
+            "30": 33,
+            "31": 33
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.EquipoService/<Crear>d__3": {
+        "System.Void SistemaGestionLaboratorios.Services.EquipoService/<Crear>d__3::MoveNext()": {
+          "Lines": {
+            "35": 6,
+            "36": 6,
+            "37": 6,
+            "38": 2,
+            "40": 4,
+            "41": 4,
+            "42": 2,
+            "44": 2,
+            "45": 2,
+            "46": 2,
+            "47": 2,
+            "48": 2,
+            "49": 2,
+            "50": 2
+          },
+          "Branches": [
+            {
+              "Line": 37,
+              "Offset": 189,
+              "EndOffset": 191,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 37,
+              "Offset": 189,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 41,
+              "Offset": 354,
+              "EndOffset": 356,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 41,
+              "Offset": 354,
+              "EndOffset": 367,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.EquipoService/<DarDeBaja>d__5": {
+        "System.Void SistemaGestionLaboratorios.Services.EquipoService/<DarDeBaja>d__5::MoveNext()": {
+          "Lines": {
+            "67": 4,
+            "68": 4,
+            "69": 4,
+            "70": 2,
+            "71": 2,
+            "73": 2,
+            "74": 2
+          },
+          "Branches": [
+            {
+              "Line": 69,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 69,
+              "Offset": 168,
+              "EndOffset": 181,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.EquipoService/<EditarEstado>d__4": {
+        "System.Void SistemaGestionLaboratorios.Services.EquipoService/<EditarEstado>d__4::MoveNext()": {
+          "Lines": {
+            "54": 4,
+            "55": 4,
+            "56": 4,
+            "58": 4,
+            "59": 2,
+            "60": 2,
+            "62": 2,
+            "63": 4
+          },
+          "Branches": [
+            {
+              "Line": 58,
+              "Offset": 313,
+              "EndOffset": 315,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 58,
+              "Offset": 313,
+              "EndOffset": 334,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Services\\SoftwareService.cs": {
+      "SistemaGestionLaboratorios.Services.SoftwareService": {
+        "System.Void SistemaGestionLaboratorios.Services.SoftwareService::.ctor(SistemaGestionLaboratorios.Services.ISoftwareRepository)": {
+          "Lines": {
+            "21": 5,
+            "22": 5,
+            "23": 5,
+            "24": 5
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.SoftwareService/<Crear>d__2": {
+        "System.Void SistemaGestionLaboratorios.Services.SoftwareService/<Crear>d__2::MoveNext()": {
+          "Lines": {
+            "28": 2,
+            "29": 2,
+            "30": 2,
+            "31": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 1
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 175,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 30,
+              "Offset": 175,
+              "EndOffset": 188,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.SoftwareService/<Eliminar>d__3": {
+        "System.Void SistemaGestionLaboratorios.Services.SoftwareService/<Eliminar>d__3::MoveNext()": {
+          "Lines": {
+            "43": 2,
+            "44": 2,
+            "45": 2,
+            "46": 1,
+            "47": 1,
+            "49": 1,
+            "50": 1
+          },
+          "Branches": [
+            {
+              "Line": 45,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 45,
+              "Offset": 168,
+              "EndOffset": 181,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Services\\TicketService.cs": {
+      "SistemaGestionLaboratorios.Services.Comentario": {
+        "System.String SistemaGestionLaboratorios.Services.Comentario::get_Id()": {
+          "Lines": {
+            "32": 5
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Services.Comentario::get_TicketId()": {
+          "Lines": {
+            "33": 3
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Services.Comentario::get_UsuarioId()": {
+          "Lines": {
+            "34": 3
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Services.Comentario::get_Contenido()": {
+          "Lines": {
+            "35": 3
+          },
+          "Branches": []
+        },
+        "System.DateTime SistemaGestionLaboratorios.Services.Comentario::get_CreadoEn()": {
+          "Lines": {
+            "36": 2
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService": {
+        "System.String SistemaGestionLaboratorios.Services.TicketService::CalcularPrioridad(SistemaGestionLaboratorios.Models.Ticket,System.Nullable`1<System.DateTime>)": {
+          "Lines": {
+            "57": 7,
+            "58": 7,
+            "60": 7,
+            "61": 3,
+            "62": 4,
+            "63": 2,
+            "67": 5,
+            "68": 3,
+            "69": 4,
+            "70": 3,
+            "71": 1,
+            "72": 7
+          },
+          "Branches": [
+            {
+              "Line": 58,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 58,
+              "Offset": 10,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 60,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 62,
+              "Offset": 54,
+              "EndOffset": 56,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 62,
+              "Offset": 54,
+              "EndOffset": 68,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 60,
+              "Offset": 38,
+              "EndOffset": 80,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            },
+            {
+              "Line": 67,
+              "Offset": 101,
+              "EndOffset": 103,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 67,
+              "Offset": 101,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 3
+            },
+            {
+              "Line": 69,
+              "Offset": 161,
+              "EndOffset": 163,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 69,
+              "Offset": 161,
+              "EndOffset": 172,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 2
+            },
+            {
+              "Line": 70,
+              "Offset": 191,
+              "EndOffset": 193,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 1
+            },
+            {
+              "Line": 70,
+              "Offset": 191,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Boolean SistemaGestionLaboratorios.Services.TicketService::EstaAtrasado(SistemaGestionLaboratorios.Models.Ticket,System.Nullable`1<System.DateTime>)": {
+          "Lines": {
+            "78": 4,
+            "79": 4,
+            "80": 5,
+            "81": 4,
+            "82": 2,
+            "83": 2,
+            "84": 4
+          },
+          "Branches": [
+            {
+              "Line": 79,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 10,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 80,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 80,
+              "Offset": 38,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 81,
+              "Offset": 58,
+              "EndOffset": 60,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 81,
+              "Offset": 58,
+              "EndOffset": 65,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void SistemaGestionLaboratorios.Services.TicketService::.ctor(SistemaGestionLaboratorios.Services.ITicketRepository,SistemaGestionLaboratorios.Services.IEquipoRepositoryForTickets)": {
+          "Lines": {
+            "47": 31,
+            "48": 31,
+            "49": 31,
+            "50": 31,
+            "51": 31
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<>c": {
+        "System.Boolean SistemaGestionLaboratorios.Services.TicketService/<>c::<Crear>b__5_0(SistemaGestionLaboratorios.Models.Ticket)": {
+          "Lines": {
+            "112": 4
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<AgregarComentario>d__9": {
+        "System.Void SistemaGestionLaboratorios.Services.TicketService/<AgregarComentario>d__9::MoveNext()": {
+          "Lines": {
+            "208": 2,
+            "209": 2,
+            "210": 2,
+            "212": 2,
+            "213": 1,
+            "215": 1,
+            "216": 1
+          },
+          "Branches": [
+            {
+              "Line": 209,
+              "Offset": 151,
+              "EndOffset": 153,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 209,
+              "Offset": 151,
+              "EndOffset": 165,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 212,
+              "Offset": 195,
+              "EndOffset": 197,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 212,
+              "Offset": 195,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<Asignar>d__6": {
+        "System.Void SistemaGestionLaboratorios.Services.TicketService/<Asignar>d__6::MoveNext()": {
+          "Lines": {
+            "128": 2,
+            "129": 2,
+            "130": 2,
+            "132": 2,
+            "133": 1,
+            "135": 1,
+            "136": 1
+          },
+          "Branches": [
+            {
+              "Line": 129,
+              "Offset": 151,
+              "EndOffset": 153,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 129,
+              "Offset": 151,
+              "EndOffset": 165,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 132,
+              "Offset": 195,
+              "EndOffset": 197,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 132,
+              "Offset": 195,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<CambiarEstado>d__8": {
+        "System.Void SistemaGestionLaboratorios.Services.TicketService/<CambiarEstado>d__8::MoveNext()": {
+          "Lines": {
+            "158": 7,
+            "160": 7,
+            "161": 1,
+            "163": 6,
+            "164": 6,
+            "167": 6,
+            "168": 6,
+            "169": 6,
+            "170": 6,
+            "171": 6,
+            "173": 6,
+            "174": 6,
+            "175": 1,
+            "178": 5,
+            "179": 5,
+            "180": 5,
+            "181": 1,
+            "182": 4,
+            "184": 4,
+            "187": 4,
+            "188": 4,
+            "189": 3,
+            "190": 3,
+            "191": 3,
+            "192": 3,
+            "193": 3,
+            "194": 3,
+            "195": 3,
+            "196": 3,
+            "197": 3,
+            "198": 3,
+            "201": 4,
+            "202": 4
+          },
+          "Branches": [
+            {
+              "Line": 160,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 160,
+              "Offset": 59,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 160,
+              "Offset": 75,
+              "EndOffset": 77,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 160,
+              "Offset": 75,
+              "EndOffset": 88,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 6
+            },
+            {
+              "Line": 163,
+              "Offset": 214,
+              "EndOffset": 216,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 163,
+              "Offset": 214,
+              "EndOffset": 228,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 6
+            },
+            {
+              "Line": 173,
+              "Offset": 297,
+              "EndOffset": 299,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 5
+            },
+            {
+              "Line": 173,
+              "Offset": 297,
+              "EndOffset": 318,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 173,
+              "Offset": 323,
+              "EndOffset": 325,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 173,
+              "Offset": 323,
+              "EndOffset": 420,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 5
+            },
+            {
+              "Line": 178,
+              "Offset": 433,
+              "EndOffset": 435,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 5
+            },
+            {
+              "Line": 180,
+              "Offset": 447,
+              "EndOffset": 449,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 5
+            },
+            {
+              "Line": 180,
+              "Offset": 447,
+              "EndOffset": 465,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 180,
+              "Offset": 470,
+              "EndOffset": 472,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 1
+            },
+            {
+              "Line": 180,
+              "Offset": 470,
+              "EndOffset": 483,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 4
+            },
+            {
+              "Line": 178,
+              "Offset": 433,
+              "EndOffset": 484,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 4
+            },
+            {
+              "Line": 187,
+              "Offset": 643,
+              "EndOffset": 645,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 4
+            },
+            {
+              "Line": 187,
+              "Offset": 656,
+              "EndOffset": 658,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 3
+            },
+            {
+              "Line": 187,
+              "Offset": 643,
+              "EndOffset": 674,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 1
+            },
+            {
+              "Line": 187,
+              "Offset": 656,
+              "EndOffset": 674,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 1
+            },
+            {
+              "Line": 187,
+              "Offset": 679,
+              "EndOffset": 684,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 3
+            },
+            {
+              "Line": 194,
+              "Offset": 852,
+              "EndOffset": 854,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 2
+            },
+            {
+              "Line": 194,
+              "Offset": 852,
+              "EndOffset": 857,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 1
+            },
+            {
+              "Line": 187,
+              "Offset": 679,
+              "EndOffset": 991,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 4
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<Crear>d__5": {
+        "System.Void SistemaGestionLaboratorios.Services.TicketService/<Crear>d__5::MoveNext()": {
+          "Lines": {
+            "90": 7,
+            "92": 7,
+            "93": 7,
+            "94": 1,
+            "97": 6,
+            "98": 2,
+            "99": 2,
+            "100": 2,
+            "101": 1,
+            "102": 1,
+            "105": 5,
+            "106": 5,
+            "107": 3,
+            "108": 3,
+            "109": 3,
+            "110": 3,
+            "111": 3,
+            "113": 1,
+            "114": 3,
+            "116": 5,
+            "117": 5,
+            "118": 5,
+            "120": 5,
+            "121": 5,
+            "122": 5
+          },
+          "Branches": [
+            {
+              "Line": 93,
+              "Offset": 203,
+              "EndOffset": 205,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 93,
+              "Offset": 203,
+              "EndOffset": 237,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 97,
+              "Offset": 255,
+              "EndOffset": 260,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 100,
+              "Offset": 411,
+              "EndOffset": 413,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 100,
+              "Offset": 411,
+              "EndOffset": 432,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 100,
+              "Offset": 437,
+              "EndOffset": 439,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 100,
+              "Offset": 437,
+              "EndOffset": 450,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 97,
+              "Offset": 255,
+              "EndOffset": 458,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            },
+            {
+              "Line": 106,
+              "Offset": 483,
+              "EndOffset": 488,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 3
+            },
+            {
+              "Line": 112,
+              "Offset": 700,
+              "EndOffset": 702,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 1
+            },
+            {
+              "Line": 112,
+              "Offset": 700,
+              "EndOffset": 713,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 3
+            },
+            {
+              "Line": 106,
+              "Offset": 483,
+              "EndOffset": 721,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 5
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.TicketService/<Reasignar>d__7": {
+        "System.Void SistemaGestionLaboratorios.Services.TicketService/<Reasignar>d__7::MoveNext()": {
+          "Lines": {
+            "142": 2,
+            "143": 2,
+            "144": 1,
+            "146": 1,
+            "147": 1,
+            "149": 1,
+            "150": 1
+          },
+          "Branches": [
+            {
+              "Line": 143,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 143,
+              "Offset": 37,
+              "EndOffset": 50,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 146,
+              "Offset": 176,
+              "EndOffset": 178,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 146,
+              "Offset": 176,
+              "EndOffset": 190,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Services\\UsuarioService.cs": {
+      "SistemaGestionLaboratorios.Services.UsuarioService": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService::.ctor(SistemaGestionLaboratorios.Services.IUsuarioRepository,SistemaGestionLaboratorios.Services.IPasswordHasher)": {
+          "Lines": {
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<CambiarPassword>d__10": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<CambiarPassword>d__10::MoveNext()": {
+          "Lines": {
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "119": 0,
+            "120": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0
+          },
+          "Branches": [
+            {
+              "Line": 116,
+              "Offset": 151,
+              "EndOffset": 153,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 151,
+              "EndOffset": 165,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 119,
+              "Offset": 217,
+              "EndOffset": 219,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 119,
+              "Offset": 217,
+              "EndOffset": 230,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<CambiarRol>d__9": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<CambiarRol>d__9::MoveNext()": {
+          "Lines": {
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<Crear>d__6": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<Crear>d__6::MoveNext()": {
+          "Lines": {
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0
+          },
+          "Branches": [
+            {
+              "Line": 74,
+              "Offset": 175,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 74,
+              "Offset": 175,
+              "EndOffset": 188,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<Desactivar>d__8": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<Desactivar>d__8::MoveNext()": {
+          "Lines": {
+            "100": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<ResetearPassword>d__12": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<ResetearPassword>d__12::MoveNext()": {
+          "Lines": {
+            "142": 0,
+            "145": 0,
+            "146": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "155": 0,
+            "157": 0,
+            "158": 0,
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0,
+            "165": 0,
+            "166": 0
+          },
+          "Branches": [
+            {
+              "Line": 148,
+              "Offset": 293,
+              "EndOffset": 202,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 257,
+              "EndOffset": 259,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 257,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 148,
+              "Offset": 293,
+              "EndOffset": 295,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 157,
+              "Offset": 345,
+              "EndOffset": 347,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 157,
+              "Offset": 345,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<SolicitarRecuperacion>d__11": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<SolicitarRecuperacion>d__11::MoveNext()": {
+          "Lines": {
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "138": 0,
+            "139": 0
+          },
+          "Branches": [
+            {
+              "Line": 131,
+              "Offset": 175,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 131,
+              "Offset": 175,
+              "EndOffset": 189,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<ValidarLogin>d__5": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<ValidarLogin>d__5::MoveNext()": {
+          "Lines": {
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "50": 0,
+            "51": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "63": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0
+          },
+          "Branches": [
+            {
+              "Line": 41,
+              "Offset": 198,
+              "EndOffset": 200,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 198,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 227,
+              "EndOffset": 229,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 256,
+              "EndOffset": 258,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 256,
+              "EndOffset": 261,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 227,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 282,
+              "EndOffset": 284,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 282,
+              "EndOffset": 370,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 388,
+              "EndOffset": 390,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 388,
+              "EndOffset": 401,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 453,
+              "EndOffset": 458,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 629,
+              "EndOffset": 634,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 59,
+              "Offset": 629,
+              "EndOffset": 777,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 453,
+              "EndOffset": 784,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.UsuarioService/<ValidarNoUltimoAdmin>d__7": {
+        "System.Void SistemaGestionLaboratorios.Services.UsuarioService/<ValidarNoUltimoAdmin>d__7::MoveNext()": {
+          "Lines": {
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0
+          },
+          "Branches": [
+            {
+              "Line": 92,
+              "Offset": 169,
+              "EndOffset": 171,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 169,
+              "EndOffset": 175,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 185,
+              "EndOffset": 187,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 185,
+              "EndOffset": 192,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 95,
+              "Offset": 334,
+              "EndOffset": 336,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 95,
+              "Offset": 334,
+              "EndOffset": 347,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SistemaGestionLaboratorios.Services.BcryptHasher": {
+        "System.String SistemaGestionLaboratorios.Services.BcryptHasher::Hash(System.String)": {
+          "Lines": {
+            "179": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SistemaGestionLaboratorios.Services.BcryptHasher::Verify(System.String,System.String)": {
+          "Lines": {
+            "180": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Models\\Equipo.cs": {
+      "SistemaGestionLaboratorios.Models.Equipo": {
+        "System.String SistemaGestionLaboratorios.Models.Equipo::get_Id()": {
+          "Lines": {
+            "6": 181
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Equipo::get_CodigoInventario()": {
+          "Lines": {
+            "7": 141
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Equipo::get_LaboratorioId()": {
+          "Lines": {
+            "8": 140
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.EstadoEquipo SistemaGestionLaboratorios.Models.Equipo::get_Estado()": {
+          "Lines": {
+            "9": 159
+          },
+          "Branches": []
+        }
+      },
+      "SistemaGestionLaboratorios.Models.Laboratorio": {
+        "System.String SistemaGestionLaboratorios.Models.Laboratorio::get_Id()": {
+          "Lines": {
+            "14": 27
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Laboratorio::get_Nombre()": {
+          "Lines": {
+            "15": 26
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Laboratorio::get_Ubicacion()": {
+          "Lines": {
+            "16": 23
+          },
+          "Branches": []
+        },
+        "System.Int32 SistemaGestionLaboratorios.Models.Laboratorio::get_Capacidad()": {
+          "Lines": {
+            "17": 10
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Models\\PasswordResetToken.cs": {
+      "SistemaGestionLaboratorios.Models.PasswordResetToken": {
+        "System.String SistemaGestionLaboratorios.Models.PasswordResetToken::get_Id()": {
+          "Lines": {
+            "6": 3
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.PasswordResetToken::get_UsuarioId()": {
+          "Lines": {
+            "7": 3
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.PasswordResetToken::get_TokenHash()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        },
+        "System.DateTime SistemaGestionLaboratorios.Models.PasswordResetToken::get_ExpiraEn()": {
+          "Lines": {
+            "9": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean SistemaGestionLaboratorios.Models.PasswordResetToken::get_Usado()": {
+          "Lines": {
+            "10": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Models\\Software.cs": {
+      "SistemaGestionLaboratorios.Models.Software": {
+        "System.String SistemaGestionLaboratorios.Models.Software::get_Id()": {
+          "Lines": {
+            "6": 57
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Software::get_Nombre()": {
+          "Lines": {
+            "7": 47
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.TipoSoftware SistemaGestionLaboratorios.Models.Software::get_Tipo()": {
+          "Lines": {
+            "8": 11
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Software::get_Version()": {
+          "Lines": {
+            "9": 17
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Models\\Ticket.cs": {
+      "SistemaGestionLaboratorios.Models.Ticket": {
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_Id()": {
+          "Lines": {
+            "6": 250
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.TipoTicket SistemaGestionLaboratorios.Models.Ticket::get_Tipo()": {
+          "Lines": {
+            "7": 100
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.CategoriaTicket SistemaGestionLaboratorios.Models.Ticket::get_Categoria()": {
+          "Lines": {
+            "8": 88
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_Descripcion()": {
+          "Lines": {
+            "9": 143
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.EstadoTicket SistemaGestionLaboratorios.Models.Ticket::get_Estado()": {
+          "Lines": {
+            "10": 108
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_EquipoId()": {
+          "Lines": {
+            "11": 228
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_UsuarioReportaId()": {
+          "Lines": {
+            "12": 143
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_TecnicoAsignadoId()": {
+          "Lines": {
+            "13": 77
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_ComentarioCierre()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_SoftwareTexto()": {
+          "Lines": {
+            "15": 3
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_SoftwareId()": {
+          "Lines": {
+            "16": 4
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Ticket::get_TicketRelacionadoId()": {
+          "Lines": {
+            "17": 11
+          },
+          "Branches": []
+        },
+        "System.DateTime SistemaGestionLaboratorios.Models.Ticket::get_FechaCreacion()": {
+          "Lines": {
+            "18": 210
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SistemaGestionLaboratorios.Models.Ticket::get_FechaCierre()": {
+          "Lines": {
+            "19": 31
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SistemaGestionLaboratorios.Models.Ticket::get_FechaLimite()": {
+          "Lines": {
+            "20": 11
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.Equipo SistemaGestionLaboratorios.Models.Ticket::get_Equipo()": {
+          "Lines": {
+            "21": 62
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Models\\Usuario.cs": {
+      "SistemaGestionLaboratorios.Models.Usuario": {
+        "System.String SistemaGestionLaboratorios.Models.Usuario::get_Id()": {
+          "Lines": {
+            "6": 37
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Usuario::get_Nombre()": {
+          "Lines": {
+            "7": 17
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Usuario::get_Correo()": {
+          "Lines": {
+            "8": 18
+          },
+          "Branches": []
+        },
+        "System.String SistemaGestionLaboratorios.Models.Usuario::get_PasswordHash()": {
+          "Lines": {
+            "9": 29
+          },
+          "Branches": []
+        },
+        "SistemaGestionLaboratorios.Models.Rol SistemaGestionLaboratorios.Models.Usuario::get_Rol()": {
+          "Lines": {
+            "10": 5
+          },
+          "Branches": []
+        },
+        "System.Boolean SistemaGestionLaboratorios.Models.Usuario::get_Activo()": {
+          "Lines": {
+            "11": 31
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> SistemaGestionLaboratorios.Models.Usuario::get_IntentosFallidos()": {
+          "Lines": {
+            "13": 21
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SistemaGestionLaboratorios.Models.Usuario::get_BloqueadoHasta()": {
+          "Lines": {
+            "14": 25
+          },
+          "Branches": []
+        }
+      }
+    },
+    "E:\\foto\\Trabajofinal_CalidadSoftware\\EpisLab.Test\\ClassLibrary1\\Errors\\DomainError.cs": {
+      "SistemaGestionLaboratorios.Errors.DomainError": {
+        "System.Void SistemaGestionLaboratorios.Errors.DomainError::.ctor(System.String)": {
+          "Lines": {
+            "8": 87
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

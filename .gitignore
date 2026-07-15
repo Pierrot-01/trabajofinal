@@ -51,3 +51,11 @@ prisma/test.db
 
 # prisma custom output client
 /lib/prisma-client
+
+# C# / .NET build outputs
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
