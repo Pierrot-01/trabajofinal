@@ -13,6 +13,10 @@ const openApiSpec = {
   },
   servers: [
     {
+      url: "/",
+      description: "Servidor del Entorno Actual (Recomendado)"
+    },
+    {
       url: "http://localhost:3000",
       description: "Servidor de Desarrollo Local"
     }
