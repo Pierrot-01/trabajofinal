@@ -12,7 +12,9 @@ interface PageProps {
 
 export default async function AdminEquiposPage({ searchParams }: PageProps) {
   const session = await auth();
-  if (!session?.user || session.user.rol !== "admin") redirect("/login");
+  if (!session?.user || (session.user.rol !== "admin" && session.user.rol !== "tecnico")) {
+    redirect("/login");
+  }
 
   const params = await searchParams;
   const { items: equipos, nextCursor } = await equipoRepository.listarPaginado({
@@ -40,6 +42,7 @@ export default async function AdminEquiposPage({ searchParams }: PageProps) {
             equiposIniciales={equipos as any}
             nextCursor={nextCursor}
             laboratorios={laboratorios as any}
+            userRol={session.user.rol}
           />
         </div>
       </main>

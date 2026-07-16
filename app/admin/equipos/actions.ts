@@ -31,10 +31,22 @@ export async function crearEquipo(rawInput: unknown) {
 
 export async function editarEquipo(equipoId: string, rawInput: unknown) {
   const session = await auth();
-  if (!session?.user || session.user.rol !== "admin") return fail("No autorizado.");
+  if (!session?.user || (session.user.rol !== "admin" && session.user.rol !== "tecnico")) {
+    return fail("No autorizado.");
+  }
 
   const parsed = editarEquipoSchema.safeParse(rawInput);
   if (!parsed.success) return fail(parsed.error.issues[0].message);
+
+  // Un técnico solo puede modificar el estado del equipo
+  if (session.user.rol === "tecnico") {
+    const keys = Object.keys(parsed.data) as Array<keyof typeof parsed.data>;
+    const modifiedKeys = keys.filter(k => parsed.data[k] !== undefined);
+    const hasOnlyEstado = modifiedKeys.length === 1 && modifiedKeys[0] === "estado";
+    if (!hasOnlyEstado) {
+      return fail("No autorizado a modificar otros campos de equipos.");
+    }
+  }
 
   try {
     // Si se está cambiando solo el estado, usar editarEstado que devuelve warning

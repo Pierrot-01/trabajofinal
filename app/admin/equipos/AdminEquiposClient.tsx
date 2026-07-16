@@ -18,6 +18,7 @@ interface Props {
   equiposIniciales: Equipo[];
   nextCursor: string | null;
   laboratorios: Laboratorio[];
+  userRol: string;
 }
 
 const estadoMeta: Record<string, { label: string; badgeCls: string; dotColor: string }> = {
@@ -27,7 +28,7 @@ const estadoMeta: Record<string, { label: string; badgeCls: string; dotColor: st
   dado_de_baja: { label: "Dado de baja", badgeCls: "kl-badge kl-badge-retired", dotColor: "#6b7a8d" },
 };
 
-export default function AdminEquiposClient({ equiposIniciales, nextCursor, laboratorios }: Props) {
+export default function AdminEquiposClient({ equiposIniciales, nextCursor, laboratorios, userRol }: Props) {
   const router = useRouter();
   const [codigoInventario, setCodigoInventario] = useState("");
   const [laboratorioId, setLaboratorioId] = useState(laboratorios[0]?.id ?? "");
@@ -79,38 +80,42 @@ export default function AdminEquiposClient({ equiposIniciales, nextCursor, labor
     }
   };
 
+  const esAdmin = userRol === "admin";
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Formulario */}
-      <div className="lg:col-span-1">
-        <div className="kl-card p-6 sticky top-6 bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl">
-          <h2 className="font-outfit text-lg font-bold text-slate-100 flex items-center gap-2 mb-4">
-            <span className="material-symbols-outlined text-[#cfbcff]">add_box</span>
-            Registrar Equipo
-          </h2>
-          <form onSubmit={handleCrear} className="space-y-4">
-            {error && <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-400">{error}</div>}
-            {ok && <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-xs text-emerald-400">{ok}</div>}
-            <div className="space-y-1">
-              <label className="kl-label">Código de Inventario</label>
-              <input required value={codigoInventario} onChange={e => setCodigoInventario(e.target.value)} placeholder="e.g. LAB01-PC01" className="kl-input" />
-            </div>
-            <div className="space-y-1">
-              <label className="kl-label">Laboratorio Destino</label>
-              <select value={laboratorioId} onChange={e => setLaboratorioId(e.target.value)} className="kl-input cursor-pointer">
-                {laboratorios.map(l => <option key={l.id} value={l.id}>{l.nombre}</option>)}
-              </select>
-            </div>
-            <button type="submit" disabled={loading || laboratorios.length === 0} className="kl-btn-primary w-full justify-center mt-2">
-              {loading ? "Creando..." : "Registrar Equipo"}
-            </button>
-            {laboratorios.length === 0 && <p className="text-xs text-slate-500 text-center mt-2">Primero debes crear un laboratorio.</p>}
-          </form>
+      {esAdmin && (
+        <div className="lg:col-span-1">
+          <div className="kl-card p-6 sticky top-6 bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl">
+            <h2 className="font-outfit text-lg font-bold text-slate-100 flex items-center gap-2 mb-4">
+              <span className="material-symbols-outlined text-[#cfbcff]">add_box</span>
+              Registrar Equipo
+            </h2>
+            <form onSubmit={handleCrear} className="space-y-4">
+              {error && <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-400">{error}</div>}
+              {ok && <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-xs text-emerald-400">{ok}</div>}
+              <div className="space-y-1">
+                <label className="kl-label">Código de Inventario</label>
+                <input required value={codigoInventario} onChange={e => setCodigoInventario(e.target.value)} placeholder="e.g. LAB01-PC01" className="kl-input" />
+              </div>
+              <div className="space-y-1">
+                <label className="kl-label">Laboratorio Destino</label>
+                <select value={laboratorioId} onChange={e => setLaboratorioId(e.target.value)} className="kl-input cursor-pointer">
+                  {laboratorios.map(l => <option key={l.id} value={l.id}>{l.nombre}</option>)}
+                </select>
+              </div>
+              <button type="submit" disabled={loading || laboratorios.length === 0} className="kl-btn-primary w-full justify-center mt-2">
+                {loading ? "Creando..." : "Registrar Equipo"}
+              </button>
+              {laboratorios.length === 0 && <p className="text-xs text-slate-500 text-center mt-2">Primero debes crear un laboratorio.</p>}
+            </form>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Tabla / Lista */}
-      <div className="lg:col-span-2 space-y-4">
+      <div className={`${esAdmin ? "lg:col-span-2" : "lg:col-span-3"} space-y-4`}>
         <div className="kl-card overflow-hidden bg-[rgba(9,9,11,0.7)] backdrop-blur-xl border border-white/10 rounded-xl">
           <div className="p-4 border-b border-white/5 bg-slate-950/20 flex justify-between items-center">
             <h3 className="font-outfit text-base font-bold text-slate-100 flex items-center gap-2">
@@ -157,13 +162,17 @@ export default function AdminEquiposClient({ equiposIniciales, nextCursor, labor
                         </td>
                         <td className="py-3.5 px-4 text-right">
                           {eq.estado !== "dado_de_baja" ? (
-                            <button
-                              onClick={() => handleDarDeBaja(eq.id, eq.codigoInventario)}
-                              className="kl-btn-danger text-xs py-1 px-3"
-                            >
-                              <span className="material-symbols-outlined text-[13px]">archive</span>
-                              Decommission
-                            </button>
+                            esAdmin ? (
+                              <button
+                                onClick={() => handleDarDeBaja(eq.id, eq.codigoInventario)}
+                                className="kl-btn-danger text-xs py-1 px-3"
+                              >
+                                <span className="material-symbols-outlined text-[13px]">archive</span>
+                                Decommission
+                              </button>
+                            ) : (
+                              <span className="text-xs text-slate-400 font-mono italic">Active</span>
+                            )
                           ) : (
                             <span className="text-xs text-slate-500 font-mono italic">Retired</span>
                           )}
